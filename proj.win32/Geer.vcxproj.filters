@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{b0dcc302-7a70-41c7-bd8e-c996cc2613b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameLayer">
+      <UniqueIdentifier>{1db4d34d-6c6b-4768-a93c-8637336c9d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OperateLayer">
+      <UniqueIdentifier>{4fb4aaf3-2652-4cce-9c9b-b5999a6b8aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameScene">
+      <UniqueIdentifier>{f8c48e69-0235-4c92-a195-733ab189b497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UiLayer">
+      <UniqueIdentifier>{596a5667-260b-480a-a090-a9dffe3a409f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameLayer\role">
+      <UniqueIdentifier>{914e873f-b0c5-4b80-a1ab-44f5395205fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\EnterScene">
+      <UniqueIdentifier>{7e1c5109-ce51-4f63-b0dd-28530ada70af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLayer.cpp">
+      <Filter>src\GameLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="MapLayer.cpp">
+      <Filter>src\GameLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>src\OperateLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateLayer.cpp">
+      <Filter>src\OperateLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>src\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>src\GameLayer\role</Filter>
+    </ClCompile>
+    <ClCompile Include="Role.cpp">
+      <Filter>src\GameLayer\role</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterScene.cpp">
+      <Filter>src\EnterScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterLayer.cpp">
+      <Filter>src\EnterScene</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>src\GameLayer\role</Filter>
+    </ClCompile>
+    <ClCompile Include="TalkingLayer.cpp">
+      <Filter>src\GameLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>src\GameLayer\role</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLayer.h">
+      <Filter>src\GameLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLayer.h">
+      <Filter>src\GameLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>src\OperateLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateLayer.h">
+      <Filter>src\OperateLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>src\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="UiLayer.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>src\GameLayer\role</Filter>
+    </ClInclude>
+    <ClInclude Include="Role.h">
+      <Filter>src\GameLayer\role</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterScene.h">
+      <Filter>src\EnterScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterLayer.h">
+      <Filter>src\EnterScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuLayer.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="StateBar.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Muisic.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoad.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="TalkingUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="AcceleratorUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="BackpackUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertiesUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillListUi.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>src\GameLayer\role</Filter>
+    </ClInclude>
+    <ClInclude Include="TalkingLayer.h">
+      <Filter>src\GameLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>src\GameLayer\role</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
