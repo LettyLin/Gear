@@ -10,6 +10,7 @@
 USING_NS_CC;
 
 class MapLayer;
+class Role;
 class Hero;
 class NPC;
 class Enemy;
@@ -21,9 +22,7 @@ public:
 
     //注册主角类，根据交互层信息进行更新
     Hero* hero;
-
     NPC* npc;
-
     Vector<Enemy*> enemies;
 
     //注册地图管理层，根据主角位置进行更新
@@ -36,7 +35,7 @@ public:
     Point tileCoordForPosition(const Point &position);
 
     //碰撞检测函数
-   void CheckCollision(const Point &last_position, const Point &new_position, const Size &size, Point &final_position, int &dropping);
+    void CheckCollision(Role* role, const Point &expect_position, Point &final_position, int &dropping);
 
     //创建对话层
     void createTalkingLayer(std::string conversation);

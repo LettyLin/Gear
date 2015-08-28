@@ -12,11 +12,16 @@ bool NPC::init(){
     }
 
     m_conversation[0][0].talker = TALKER_HERO;
-    m_conversation[0][1].talker = TALKER_HERO;
     m_conversation[0][0].text = "Hello, I am erwa!";
-    m_conversation[0][1].text = "NULL";
+    m_conversation[0][1].talker = TALKER_NPC;
+    m_conversation[0][1].text = "Hello, I am Java";
+    m_conversation[0][2].text = "NULL";
+
+    m_conversation[1][0].talker = TALKER_NPC;
     m_conversation[1][0].text = "...";
-    m_conversation[1][1].text = "NULL";
+    m_conversation[1][1].talker = TALKER_HERO;
+    m_conversation[1][1].text = "...";
+    m_conversation[1][2].text = "NULL";
 
     SpriteFrame* frame = SpriteFrame::create("npc_normal.png", Rect(0, 0, 64, 128));
     SpriteFrameCache::getInstance()->addSpriteFrame(frame, "npc_normal.png");
@@ -42,7 +47,7 @@ void NPC::startTalking(){
     }
 
     m_talkingLayer = TalkingLayer::create(m_conversation[m_nTalkingTimes]);
-    addChild(m_talkingLayer);
+    getParent()->getParent()->addChild(m_talkingLayer);
     global->setTalking(true);
     ++m_nTalkingTimes;
 };
@@ -55,7 +60,7 @@ void NPC::continueTalking(){
 
 void NPC::endTalking(){
     m_talkingLayer->EndConversation();
-    removeChild(m_talkingLayer, true);
+    getParent()->getParent()->removeChild(m_talkingLayer, true);
     m_talkingLayer = NULL;
     global->setTalking(false);
 }

@@ -8,6 +8,13 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
+struct MapSetting{
+    bool bHasScroll;
+    int nNPC;
+    int nEnemies;
+    int nBoss;
+};
+
 class MapLayer : public Layer{
 public:
     //根据地图名创建地图层
@@ -25,6 +32,8 @@ public:
     CC_SYNTHESIZE(TMXTiledMap*, m_pMap, Map);
     CC_SYNTHESIZE(TMXLayer*, m_pFloor, Floor);
     CC_SYNTHESIZE(TMXLayer*, m_pWall, Wall);
+    CC_SYNTHESIZE(TMXLayer*, m_pLeftSlope, LeftSlope);
+    CC_SYNTHESIZE(TMXLayer*, m_pRightSlope, RightSlope);
     
     CC_SYNTHESIZE(int, m_nScrollSpriteTag, ScrollSpriteTag);
     CC_SYNTHESIZE(bool, m_bHasScrollFront, HasScrollFront);
@@ -34,6 +43,7 @@ public:
 
 private:
     //从指定文件中加载地图
+    //Point
 };
 
 #endif

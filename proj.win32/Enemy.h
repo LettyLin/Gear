@@ -10,20 +10,23 @@ public:
     CREATE_FUNC(Enemy);
     
     CC_SYNTHESIZE(BoundingBox, m_eyesightBox, EyesightBox);
+    CC_SYNTHESIZE(BoundingBox, m_attackBox, AttackBox);
 
-    void onStand();
-    void onWalk();
-    void onJump();
-    void onHurt(int hurt);
-    void onAttack();
-
-    void die();
-
-    void decide();
-
-    void reverseDisition();
+    virtual void onStand();
+    virtual void onWalk();
+    virtual void onJump();
+    virtual void onAttack();
+    virtual void onHurt(int hurt);
+    virtual void onDie();
 
     virtual void update();
+    virtual void updateAllBox();
+
+    virtual void die();
+
+    virtual void decide();
+
+    virtual void reverseDisition();
 
 private:
     bool m_bSeeHero;

@@ -7,9 +7,7 @@ m_pMap(NULL),
 m_pWall(NULL)
 {
     //将新构造的地图层注册进global单例实例
-    if (NULL == global->mapLayer){
-        global->mapLayer = this;
-    }
+    global->mapLayer = this;
 }
 
 MapLayer::~MapLayer(){
@@ -24,6 +22,8 @@ bool MapLayer::init(const char* map_name){
         return false;
     }
 
+
+    m_bHasScrollFront = false;
     //LoadMapFromFile(map_name);
 
     return true;
@@ -54,6 +54,12 @@ void MapLayer::LoadMapFromFile(const char* map_name){
     //从地图中获取墙壁层
     m_pWall = m_pMap->getLayer("wall");
     m_pWall->setVisible(false);
+    //从地图中获取斜坡层
+    m_pLeftSlope = m_pMap->getLayer("leftslope");
+    m_pLeftSlope->setVisible(false);
+
+    m_pRightSlope = m_pMap->getLayer("rightslope");
+    m_pRightSlope->setVisible(false);
 
     m_pMap->setAnchorPoint(Vec2::ZERO);
     addChild(m_pMap);
@@ -93,8 +99,16 @@ void MapLayer::update(){
     Size mapSize = m_pMap->getContentSize();
     Vec2 centerPoint = visibleSize / 2;
 
-    int x = MAX(visibleSize.width / 2 + heroPosition.x / 2, heroPosition.x);
-    int y = MAX(visibleSize.height / 2, heroPosition.y);
+    int x;
+    int y;
+
+    if (m_bHasScrollFront){
+        x = MAX(visibleSize.width / 2 + heroPosition.x / 2, heroPosition.x);
+    }
+    else{
+        x = MAX(visibleSize.width / 2, heroPosition.x);
+    }
+    y = MAX(visibleSize.height / 2, heroPosition.y);
     
 
     x = MIN(x, mapSize.width - visibleSize.width / 2);

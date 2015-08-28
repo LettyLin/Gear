@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="56" height="25" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="背景" tilewidth="1800" tileheight="800">
-  <image source="背景.png" width="1800" height="800"/>
+ <tileset firstgid="1" name="scene0map" tilewidth="1800" tileheight="800">
+  <image source="scene0map.png" width="1800" height="800"/>
  </tileset>
- <tileset firstgid="2" name="地平线" tilewidth="1800" tileheight="800">
-  <image source="地平线.png" width="1800" height="800"/>
- </tileset>
- <tileset firstgid="3" name="a" tilewidth="32" tileheight="32">
+ <tileset firstgid="2" name="a" tilewidth="32" tileheight="32">
   <image source="a.png" width="32" height="32"/>
  </tileset>
  <layer name="background" width="56" height="25">
@@ -16,12 +13,22 @@
  </layer>
  <layer name="floor" width="56" height="25">
   <data encoding="base64" compression="zlib">
-   eJztw7EJAAAIA7CC///sEx1EEkgCAAAAAB3zMFy2+mMAoA==
+   eJztw7EJAAAIA7Di/0f7RAeRBJIAAAAAQMc8DJctWOcAaw==
   </data>
  </layer>
  <layer name="wall" width="56" height="25">
   <data encoding="base64" compression="zlib">
-   eJztz0ENACAMALEl+PfMAxPc0jrozHNmN782vza/Nr82vza/Nr82vza/Nr+27T/40QVZXQBD
+   eJztz0ENACAMALEF/6J5YIJbWgedec7s5tfm1+bX5tfm1+bX5tfm1+bX5te2/Qc/ukLeAC0=
+  </data>
+ </layer>
+ <layer name="leftslope" width="56" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztzgEJAAAIA7Bj/9CmOIJsCZYAAAAAAPw014GyBRegAAM=
+  </data>
+ </layer>
+ <layer name="rightslope" width="56" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztzgEJAAAIA7Bj/9CmOIJsCZYAAAAAAPw014GyBRegAAM=
   </data>
  </layer>
 </map>

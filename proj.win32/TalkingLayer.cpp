@@ -21,15 +21,11 @@ bool TalkingLayer::init(Conversation* conversations){
     m_talkingBackground = Sprite::create("talking_box.png");
     m_talkingBackground->retain();
     m_talkingBackground->setAnchorPoint(Vec2::ZERO);
-    m_talkingBackground->setPosition(Vec2::ZERO);
+    m_talkingBackground->setPosition(Vec2(200, -300));
     addChild(m_talkingBackground, 128);
+    m_talkingBackground->runAction(MoveTo::create(0.5, Vec2(200, 0)));
 
-    m_text = Label::create(m_conversations[m_nConversationTimes].text, "Comic Sans MS", 12);
-    m_text->retain();
-    m_text->setColor(Color3B(0, 0, 0));
-    m_text->setAnchorPoint(Vec2::ZERO);
-    m_text->setPosition(Vec2::ZERO);
-    m_talkingBackground->addChild(m_text);
+    ShowNextConversation();
 
     return true;
 }
@@ -48,22 +44,28 @@ TalkingLayer* TalkingLayer::create(Conversation* conversations){
 }
 
 bool TalkingLayer::ShowNextConversation(){
-    ++m_nConversationTimes;
-    m_talkingBackground->removeChild(m_text, true);
+    if (m_text != NULL){
+        m_talkingBackground->removeChild(m_text, true);
+    }
 
     if (m_conversations[m_nConversationTimes].text == "NULL"){
-        EndConversation();
         return false;
     }
 
-    Label* text = Label::create(m_conversations[m_nConversationTimes].text, "Comic Sans MS", 12);
+    if (m_conversations[m_nConversationTimes].talker == TALKER_HERO){
+    }
+    else{
+    }
+
+    Label* text = Label::create(m_conversations[m_nConversationTimes].text, "Comic Sans MS", 20);
     m_text = text;
     m_text->retain();
     text->setColor(Color3B(0, 0, 0));
     text->setAnchorPoint(Vec2::ZERO);
-    text->setPosition(Vec2::ZERO);
+    text->setPosition(Vec2(100, 100));
     m_talkingBackground->addChild(text);
 
+    ++m_nConversationTimes;
     return true;
 }
 

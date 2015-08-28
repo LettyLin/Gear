@@ -24,8 +24,23 @@ bool Enemy::init(){
     Animation* walk = createNormalAction("enemy_walk_%02d.png", 4, 10);
     setWalkAction(RepeatForever::create(Animate::create(walk)));
 
+    Animation* attackAnimation = createNormalAction("hero_normal.png", 1, 10);
+    this->setAttackAction(RepeatForever::create(Animate::create(attackAnimation)));
+
+    Animation* hurtAnimation = createNormalAction("hero_normal.png", 1, 5);
+    this->setHurtAction(Sequence::create(Animate::create(hurtAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)),
+        NULL));
+
+    Animation* dieAnimation = createNormalAction("hero_normal.png", 1, 10);
+    this->setDieAction(Animate::create(attackAnimation));
+
     m_maxHp = 20;
     m_currentHp = 20;
+    m_maxMp = 20;
+    m_currentMp = 20;
+    m_strenth = 10;
+    m_defence = 10;
 
     m_bodyBox = createBoundingBox(Vec2(0, 0), getContentSize());
     m_eyesightBox = createBoundingBox(Vec2(32, 64), Size(600, 600));
@@ -40,33 +55,71 @@ bool Enemy::init(){
 
 void Enemy::onStand(){
     setVelocity(Vec2::ZERO);
-    runStandAction();
+    Role::onStand();
 }
 
 void Enemy::onWalk(){
-    setVelocity(Vec2(3, 0));
-    runWalkAction();
+    if (!m_moveable){
+        return;
+    }
+
+    setVelocity(Vec2(4, 0));
+    Role::onWalk();
 }
 
 void Enemy::onJump(){
+    if (!m_moveable){
+        return;
+    }
+
     if (!m_dropping){
         m_dropping = true;
-        setVelocity(Vec2(m_velocity.x, 30));
+        setVelocity(Vec2(m_velocity.x, 9));
     }
-    runJumpAction();
+    Role::onJump();
 }
-void Enemy::onAttack(){}
+
+void Enemy::onAttack(){
+    if (!m_moveable){
+        return;
+    }
+
+    Hero* hero = global->hero;
+    Rect heroBox = hero->getBodyBox().actual;
+    if (m_attackBox.actual.intersectsRect(heroBox)){
+        int hurt = m_strenth + rand() % 20 - 10;
+        if (rand() % 100 < 5){
+            hurt *= 2;
+        }
+        hero->onHurt(hurt);
+    }
+
+    Role::onAttack();
+}
 
 void Enemy::onHurt(int hurt){
-    m_currentHp -= hurt;
+    if (!m_moveable){
+        return;
+    }
+
+    int actual_hurt = hurt - (m_defence + rand() % 20 - 10);
+    m_currentHp -= actual_hurt;
+    Role::onHurt(actual_hurt);
+
     if (m_currentHp <= 0){
         die();
     }
+
+    m_moveable = false;
+}
+
+void Enemy::onDie(){
+    Role::onDie();
 }
 
 void Enemy::die(){
     getParent()->removeChild(this, true);
-    global->enemies.erase(m_nIndex);
+    global->enemies.eraseObject(this, true);
 }
 
 void Enemy::decide(){
@@ -174,5 +227,10 @@ void Enemy::update(){
         decide();
     }
     Role::update();
+}
+
+void Enemy::updateAllBox(){
+    updateBox(m_bodyBox);
     updateBox(m_eyesightBox);
+    updateBox(m_attackBox);
 }

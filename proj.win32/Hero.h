@@ -17,19 +17,18 @@ public:
     CC_SYNTHESIZE(BoundingBox, m_attackBox, AttackBox);
     CC_SYNTHESIZE(BoundingBox, m_talkingBox, TalkingBox);
 
-    virtual void update();
+    void Fresh();
 
-    //调用行走动作
-    void onWalk();
-    //调用站立动作
-    void onStand();
-    //调用跳跃动画
-    void onJump();
-
-    void onAttack();
-    
-    void onTalk();
+    virtual void onWalk();
+    virtual void onStand();
+    virtual void onJump();
+    virtual  void onAttack();
+    virtual void onHurt(int hurt);
+    virtual void onDie();
+    virtual void onTalk();
     //Add other actions here
+
+    virtual void updateAllBox();
 };
 
 #endif

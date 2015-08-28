@@ -72,11 +72,14 @@
     <ClCompile Include="NPC.cpp">
       <Filter>src\GameLayer\role</Filter>
     </ClCompile>
-    <ClCompile Include="TalkingLayer.cpp">
-      <Filter>src\GameLayer</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>src\GameLayer\role</Filter>
+    </ClCompile>
+    <ClCompile Include="TalkingLayer.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Formater.cpp">
+      <Filter>src\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +140,6 @@
     <ClInclude Include="SaveLoad.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="TalkingUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
     <ClInclude Include="AcceleratorUi.h">
       <Filter>src\UiLayer</Filter>
     </ClInclude>
@@ -158,11 +158,14 @@
     <ClInclude Include="NPC.h">
       <Filter>src\GameLayer\role</Filter>
     </ClInclude>
-    <ClInclude Include="TalkingLayer.h">
-      <Filter>src\GameLayer</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>src\GameLayer\role</Filter>
+    </ClInclude>
+    <ClInclude Include="TalkingLayer.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Formater.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

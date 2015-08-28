@@ -139,6 +139,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnterLayer.cpp" />
     <ClCompile Include="EnterScene.cpp" />
+    <ClCompile Include="Formater.cpp" />
     <ClCompile Include="GameLayer.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Global.cpp" />
@@ -160,6 +161,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="EnterScene.h" />
     <ClInclude Include="GameLayer.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Formater.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Keyboard.h" />
@@ -178,7 +180,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="SkillListUi.h" />
     <ClInclude Include="StateBar.h" />
     <ClInclude Include="TalkingLayer.h" />
-    <ClInclude Include="TalkingUi.h" />
     <ClInclude Include="UiLayer.h" />
   </ItemGroup>
   <ItemGroup>

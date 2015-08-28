@@ -5,8 +5,29 @@
 #ifndef _H_GAME_LAYER_
 #define _H_GAME_LAYER_
 
+#include <vector>
 #include <cocos2d.h>
 USING_NS_CC;
+
+struct EnemyInfo{
+    std::string name;
+    int number;
+};
+
+struct SceneInfo{
+    bool is_scroll_front;
+    int npc_number;
+    std::string* npcs;
+    int enemy_number;
+    EnemyInfo* enemies;
+    int boss_number;
+    EnemyInfo* bosses;
+
+    Point enter_point;
+    std::vector<Point> m_NPCPoints;
+    std::vector<Point> m_EnemyPoints;
+    std::vector<Point> m_BossPoints;
+};
 
 class MapLayer;
 class Hero;
@@ -20,10 +41,21 @@ public:
     virtual bool init(int which_scene);
     static GameLayer* create(int which_scene);
 
+    void InitSceneInfo();
+    void LoadSceneInfo(int which_scene);
+    void ReleaseSceneInfo();
+
+    void addMap(int which_scene);
+    void addRole();
+
     //cocos2d自带的更新函数，更新游戏
     virtual void update(float dt);
 
 private:
+    SceneInfo* m_pSceneInfo;
+
+    int m_nSceneIndex;
+
     MapLayer* m_pMapLayer;
     Hero* m_pHero;
     NPC* m_pNpc;
