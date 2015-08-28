@@ -199,12 +199,14 @@ void GameLayer::addMap(int which_scene){
 void GameLayer::addRole(){
     Hero* hero;
     if (NULL == global->hero){
-        global->hero = Hero::create();
-        global->hero->retain();
     }
+    global->hero = Hero::create();
+    global->hero->retain();
     hero = global->hero;
+   
     hero->setAnchorPoint(Vec2::ZERO);
     hero->setPosition(m_pSceneInfo->enter_point);
+    hero->updateAllBox();
     hero->setMapSize(m_pMapLayer->getMap()->getContentSize());
     hero->onStand();
     addChild(hero, 10);
@@ -214,6 +216,7 @@ void GameLayer::addRole(){
         global->npc = npc;
         npc->setAnchorPoint(Vec2::ZERO);
         npc->setPosition(m_pSceneInfo->m_NPCPoints.at(i));
+        npc->updateAllBox();
         addChild(npc, 8);
     }
 
@@ -224,22 +227,17 @@ void GameLayer::addRole(){
             enemy->setAnchorPoint(Vec2::ZERO);
             int random = rand() % m_pSceneInfo->m_EnemyPoints.size();
             enemy->setPosition(m_pSceneInfo->m_EnemyPoints.at(random));
+            enemy->updateAllBox();
             addChild(enemy, 9);        
         }
     }
-
-    /*    Enemy* enemy = Enemy::create();
-    global->enemies.insert(0, enemy);
-    enemy->setAnchorPoint(Vec2::ZERO);
-    enemy->setPosition(1022.0f, 700.0f);
-    addChild(enemy, 5);*/
 }
 
 void GameLayer::update(float dt){
     //¸üÐÂÖ÷½Ç×´Ì¬
     Hero* hero = global->hero;
     hero->update();
-    if (hero->getPosition().x + hero->getBodyBox().origin.size.width == m_pMapLayer->getMap()->getContentSize().width
+    if (hero->getBodyBox().actual.origin.x + hero->getBodyBox().origin.size.width == m_pMapLayer->getMap()->getContentSize().width
         && m_nSceneIndex != MAX_SCENE){
         global->EnterScene(m_nSceneIndex + 1);
     }

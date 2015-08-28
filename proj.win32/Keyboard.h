@@ -8,6 +8,11 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
+enum eKeyState{
+    KEY_STATE_LEFT_ARROW,
+    KEY_STATE_RIGHT_ARROW,
+};
+
 class Keyboard : public Layer{
 public:
     Keyboard();

@@ -25,12 +25,16 @@ void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
     //ÓÒ¼ü
     if (keycode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW){
         global->hero->setDirection(ROLE_DIRECTION_RIGHT);
-        global->hero->onWalk();
+        if (!global->hero->getDropping()){
+            global->hero->onWalk();
+        }
     }
     //×ó¼ü
     if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW){
         global->hero->setDirection(ROLE_DIRECTION_LEFT);
-        global->hero->onWalk();
+        if (!global->hero->getDropping()){
+            global->hero->onWalk();
+        }
     }
     //ÉÏ¼ü
     if (keycode == EventKeyboard::KeyCode::KEY_UP_ARROW){
@@ -47,7 +51,12 @@ void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
     }
 
     if (keycode == EventKeyboard::KeyCode::KEY_LEFT_CTRL){
-        global->hero->onAttack();
+        if (global->hero->getVelocity().x != 0){
+            global->hero->onWalkAttack();
+        }
+        else{
+            global->hero->onAttack();
+        }
     }
 
     //Add other keycodes here

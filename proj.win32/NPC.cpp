@@ -35,6 +35,9 @@ bool NPC::init(){
 
     runStandAction();
 
+    m_maxHp = 200;
+    m_currentHp = 200;
+
     m_bodyBox = createBoundingBox(Vec2(0, 0), getContentSize());
     m_nTalkingTimes = 0;
 

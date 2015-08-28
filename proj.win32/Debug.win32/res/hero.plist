@@ -4,60 +4,852 @@
 	<dict>
 		<key>frames</key>
 		<dict>
-			<key>hero_normal.png</key>
+			<key>hero_attack00.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,0},{64,128}}</string>
+				<string>{{0,0},{128,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{64,128}</string>
+				<string>{128,128}</string>
 			</dict>
-			<key>hero_walk_00.png</key>
+			<key>hero_attack01.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,128},{64,128}}</string>
+				<string>{{0,128},{128,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{64,128}</string>
+				<string>{128,128}</string>
 			</dict>
-			<key>hero_walk_01.png</key>
+			<key>hero_attack02.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,256},{64,128}}</string>
+				<string>{{0,256},{128,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{64,128}</string>
+				<string>{128,128}</string>
 			</dict>
-			<key>hero_walk_02.png</key>
+			<key>hero_attack03.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,384},{64,128}}</string>
+				<string>{{0,384},{128,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{64,128}</string>
+				<string>{128,128}</string>
 			</dict>
-			<key>hero_walk_03.png</key>
+			<key>hero_attack04.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,512},{64,128}}</string>
+				<string>{{0,512},{128,128}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{64,128}</string>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,640},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,768},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,896},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack08.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1024},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack09.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1152},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1280},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_attack11.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1408},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1536},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1664},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1792},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1920},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{384,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{512,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jump08.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{640,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{768,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{896,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1024,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1152,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1280,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1408,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1536,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_stand07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1664,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1792,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1920,0},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,256},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,384},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,512},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,640},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walk07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,768},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_crouch00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,896},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_crouch01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1024},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_crouch02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1152},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_crouch03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1280},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jumpattack00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1408},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jumpattack01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1536},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jumpattack02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1664},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jumpattack03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1792},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_jumpattack04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{128,1920},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{384,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{512,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{640,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{768,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{896,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1024,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1152,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack08.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1280,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack09.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1408,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1536,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack11.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1664,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_specialattack12.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1792,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_standup00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1920,128},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_standup01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,256},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_standup02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,384},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_standup03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,512},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack00.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,640},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack01.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,768},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack02.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,896},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack03.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1024},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack04.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1152},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack05.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1280},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack06.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1408},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack07.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1536},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack08.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1664},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack09.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1792},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{256,1920},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack11.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{384,256},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack12.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{512,256},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
+			</dict>
+			<key>hero_walkattack13.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{640,256},{128,128}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{128,128}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>
@@ -65,18 +857,18 @@
 			<key>format</key>
 			<integer>2</integer>
 			<key>textureFileName</key>
-			<string>Plist1.png</string>
+			<string>hero.png</string>
 			<key>realTextureFileName</key>
-			<string>Plist1.png</string>
+			<string>hero.png</string>
 			<key>size</key>
-			<string>{64,1024}</string>
+			<string>{2048,2048}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>64</integer>
+			<integer>2048</integer>
 			<key>height</key>
-			<integer>1024</integer>
+			<integer>2048</integer>
 		</dict>
 	</dict>
 </plist>

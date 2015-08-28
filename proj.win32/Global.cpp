@@ -47,8 +47,8 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
     Point expect_leftTop = Point(expect_position.x, expect_position.y + role->getBodyBox().origin.size.height);
     Point expect_rightBottom = Point(expect_position.x + role->getBodyBox().origin.size.width, expect_position.y);
     //获取精灵上次位置处理角碰撞
-    Point last_leftTop = Point(role->getPositionX(), role->getPositionY() + role->getBodyBox().origin.size.height);
-    Point last_rightBottom = Point(role->getPositionX() + role->getBodyBox().origin.size.width, role->getPositionY());
+    Point last_leftTop = Point(role->getBodyBox().actual.origin.x, role->getBodyBox().actual.origin.y + role->getBodyBox().origin.size.height);
+    Point last_rightBottom = Point(role->getBodyBox().actual.origin.x + role->getBodyBox().origin.size.width, role->getBodyBox().actual.origin.y);
 
     //将精灵坐标转换为瓦片坐标
     Point expect_leftTop_tileCoord = tileCoordForPosition(expect_leftTop);
@@ -67,7 +67,7 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
     Size mapSize = map->getContentSize();
 
     //检测墙碰撞
-    for (int y = expect_leftTop_tileCoord.y + 2; y < expect_rightBottom_tileCoord.y; ++y){
+    for (int y = expect_leftTop_tileCoord.y +1; y < expect_rightBottom_tileCoord.y; ++y){
         for (int x = expect_leftTop_tileCoord.x; x <= expect_rightBottom_tileCoord.x; ++x){
             Point tileCoord = Point(x, y);
             int tileGid = wall->getTileGIDAt(tileCoord);
@@ -80,7 +80,7 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
                 }
                 //如果碰到了右侧墙壁
                 else if(x == expect_rightBottom_tileCoord.x){
-                    final_position.x = expect_leftTop_tileCoord.x * tileSize.width;
+                    final_position.x = expect_leftTop_tileCoord.x * tileSize.width - 1;
                 }
                 break;
             }
@@ -95,14 +95,14 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
         if (floor_tileGid != 0){
             //利用精灵上次的位置处理角碰撞
             if (expect_rightBottom_tileCoord.y != last_rightBottom_tileCoord.y){
-                if (role->getState() == ROLE_STATE_JUMP){
-                    if (role->getLastJump().y < mapSize.height - expect_rightBottom_tileCoord.y * tileSize.height){
-                        dropping = ROLE_COLLISION_NULL;
-                        break;
-                    }
+                if (!(role->getVelocity().y > 0)){
+                    dropping |= ROLE_COLLISION_FLOOR;
+                    final_position.y = mapSize.height - expect_rightBottom_tileCoord.y * tileSize.height + 1;
                 }
-                dropping |= ROLE_COLLISION_FLOOR;
-                final_position.y = mapSize.height - expect_rightBottom_tileCoord.y * tileSize.height + 1;
+                else{
+                    dropping = ROLE_COLLISION_NULL;
+                }
+                break;
             }
             else if (wall->getTileGIDAt(tileCoord) != 0){
                 dropping |= ROLE_COLLISION_WALL;

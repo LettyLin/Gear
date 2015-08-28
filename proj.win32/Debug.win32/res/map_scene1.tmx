@@ -16,22 +16,22 @@
  </layer>
  <layer name="wall" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt08EJACAMBMGA/ffsx5d/vaAzkAZuSRUAAAAAvxjr6GPvoc9b9Mywe4bd4Qy/lWF3ALhjAqgDABw=
+   eJzt08EJACAMBMGA/ffsx5d/vaAzkAZuSRUAAAAAPxjr6GVvotFb9Mywe4bd4Qy/lWF3ALhjAqgbABw=
   </data>
  </layer>
  <layer name="floor" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1jEOgCAMBVAS7n9nFycXNdBW8L2kK5QfQmkNAAAAgL/oZ/FeH6i7NWbt87SPVUT3vnI2EeSRS9415B0ncn59dQ5m9TvzPLMy2en9yvw3jay/y9yo+p9Wvz/Vdc2AHFX3HVZzAKj/Ap4=
+   eJzt1ksKwCAMBUDB+9+5m65KoYgmfjoDWarxLYylAAAAAPAH9S7aPbOrjfW15u2siNpJRs+7ZhNBDnPIfA65x+iZTZGzL/Ktz+p35H1GZXLK3Mj+N/Xsf8q/ZVb/We/MygWwqgt/GAJ3
   </data>
  </layer>
  <layer name="rightslope" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1aENAEAIBEES+u/5LQ53j5hJaGDFUQUAAAAAbHocGZpn6Z2lN8ANdjjL7/tDc+CyB5MmADE=
+   eJzt1bEJAEAMA7FA9t/525DiS6eRwAtc4yoAAAAA4KfHyNA8S+8begPc8n15mgOwPU3GACs=
   </data>
  </layer>
  <layer name="leftslope" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt0KENADAMA8FI3n/ngrKiogTkTjK3vgoAAAAAAAB6ZfrAYin9p2h/6dArz+ihO/w5Ir8ALg==
+   eJzt0DENAAAIBLFP8O+ZGQMw0Cq4XAIAAAAAAAC76jrgsYr/V7wHgKkBoRQAEA==
   </data>
  </layer>
 </map>

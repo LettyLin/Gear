@@ -17,12 +17,11 @@ public:
     CC_SYNTHESIZE(BoundingBox, m_attackBox, AttackBox);
     CC_SYNTHESIZE(BoundingBox, m_talkingBox, TalkingBox);
 
-    void Fresh();
-
     virtual void onWalk();
     virtual void onStand();
     virtual void onJump();
     virtual  void onAttack();
+    virtual void onWalkAttack();
     virtual void onHurt(int hurt);
     virtual void onDie();
     virtual void onTalk();

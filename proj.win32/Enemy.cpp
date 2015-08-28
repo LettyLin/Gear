@@ -24,15 +24,15 @@ bool Enemy::init(){
     Animation* walk = createNormalAction("enemy_walk_%02d.png", 4, 10);
     setWalkAction(RepeatForever::create(Animate::create(walk)));
 
-    Animation* attackAnimation = createNormalAction("hero_normal.png", 1, 10);
+    Animation* attackAnimation = createNormalAction("npc_normal.png", 1, 10);
     this->setAttackAction(RepeatForever::create(Animate::create(attackAnimation)));
 
-    Animation* hurtAnimation = createNormalAction("hero_normal.png", 1, 5);
+    Animation* hurtAnimation = createNormalAction("npc_normal.png", 1, 5);
     this->setHurtAction(Sequence::create(Animate::create(hurtAnimation),
         CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)),
         NULL));
 
-    Animation* dieAnimation = createNormalAction("hero_normal.png", 1, 10);
+    Animation* dieAnimation = createNormalAction("npc_normal.png", 1, 10);
     this->setDieAction(Animate::create(attackAnimation));
 
     m_maxHp = 20;
@@ -54,6 +54,10 @@ bool Enemy::init(){
 }
 
 void Enemy::onStand(){
+    if (!m_moveable){
+        return;
+    }
+
     setVelocity(Vec2::ZERO);
     Role::onStand();
 }
@@ -106,10 +110,6 @@ void Enemy::onHurt(int hurt){
     m_currentHp -= actual_hurt;
     Role::onHurt(actual_hurt);
 
-    if (m_currentHp <= 0){
-        die();
-    }
-
     m_moveable = false;
 }
 
@@ -129,8 +129,8 @@ void Enemy::decide(){
     m_bSeeHero = m_eyesightBox.actual.intersectsRect(global->hero->getBodyBox().actual);
 
     if (m_bSeeHero){
-        Point heroPosition = global->hero->getPosition();
-        Point enemyPosition = getPosition();
+        Point heroPosition = global->hero->getBodyBox().actual.origin;
+        Point enemyPosition = getBodyBox().actual.origin;
         if (m_lastCollisionState == ROLE_COLLISION_CORNER){
             decide = rand() % 100;
             if (decide < 90){

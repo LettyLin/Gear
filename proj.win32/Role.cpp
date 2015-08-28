@@ -6,7 +6,12 @@ Role::Role() :
 m_pStandAction(NULL),
 m_pWalkAction(NULL),
 m_pJumpAction(NULL),
+m_pCrouchAction(NULL),
+m_pStandupAction(NULL),
 m_pAttackAction(NULL),
+m_pWalkAttackAction(NULL),
+m_pJumpAttackAction(NULL), 
+m_pSpecialAttackAction(NULL),
 m_pHurtAction(NULL),
 m_pDieAction(NULL),
 m_moveable(true),
@@ -21,47 +26,83 @@ m_lastCollisionState(0)
 
 //析构函数，释放动画所占用的内存
 Role::~Role(){
-    /*CC_SAFE_RELEASE_NULL (m_pStandAction);
-    CC_SAFE_RELEASE_NULL(m_pWalkAction);*/
+        CC_SAFE_RELEASE_NULL(m_pStandAction);
+        CC_SAFE_RELEASE_NULL(m_pWalkAction);
+        CC_SAFE_RELEASE_NULL(m_pJumpAction);
+        CC_SAFE_RELEASE_NULL(m_pCrouchAction);
+        CC_SAFE_RELEASE_NULL(m_pStandupAction);
+        CC_SAFE_RELEASE_NULL(m_pJumpAction);
+        CC_SAFE_RELEASE_NULL(m_pAttackAction);
+        CC_SAFE_RELEASE_NULL(m_pWalkAttackAction);
+        CC_SAFE_RELEASE_NULL(m_pJumpAttackAction);
+        CC_SAFE_RELEASE_NULL(m_pSpecialAttackAction);
+        CC_SAFE_RELEASE_NULL(m_pHurtAction);
+        CC_SAFE_RELEASE_NULL(m_pDieAction);
 }
 
 //根据当前状态判断是否可以转换到期望状态
 bool Role::ChangeState(const eRoleState new_state){
-    if (!m_moveable){
-        return false;
-    }
-
     m_state = new_state;
     return true;
 }
 
 void Role::runStandAction(){
+    stopAllActions();
     this->runAction(m_pStandAction);
 }
 
 void Role::runWalkAction(){
+    stopAllActions();
     this->runAction(m_pWalkAction);
 }
 
 void Role::runJumpAction(){
+    stopAllActions();
     this->runAction(m_pJumpAction);
 }
 
+void Role::runCrouchAction(){
+    stopAllActions();
+    this->runAction(m_pCrouchAction);
+}
+
+void Role::runStandUpAction(){
+    stopAllActions();
+    this->runAction(m_pStandupAction);
+}
+
+void Role::runWalkAttackAction(){
+    stopAllActions();
+    this->runAction(m_pWalkAttackAction);
+}
+
+void Role::runJumpAttackAction(){
+    stopAllActions();
+    this->runAction(m_pJumpAttackAction);
+}
+
+void Role::runSpecialAttackAction(){
+    stopAllActions();
+    this->runAction(m_pSpecialAttackAction);
+}
+
 void Role::runAttackAction(){
+    stopAllActions();
     this->runAction(m_pAttackAction);
 }
 
 void Role::runHurtAction(){
+    stopAllActions();
     this->runAction(m_pHurtAction);
 }
 
 void Role::runDieAction(){
+    stopAllActions();
     this->runAction(m_pDieAction);
 }
 
 void Role::onStand(){
     if (ChangeState(ROLE_STATE_STAND)){
-        this->stopAllActions();
         runStandAction();
     }
 }
@@ -73,10 +114,34 @@ void Role::onWalk(){
 }
 
 void Role::onJump(){
-    m_lastJump = getPosition();
+    m_lastJump = m_bodyBox.actual.origin;
 
     if (ChangeState(ROLE_STATE_JUMP)){
         runJumpAction();
+    }
+}
+
+void Role::onCrouch(){
+    if (ChangeState(ROLE_STATE_CROUCH)){
+        runCrouchAction();
+    }
+}
+
+void Role::onWalkAttack(){
+    if (ChangeState(ROLE_STATE_ATTACK)){
+        runWalkAttackAction();
+    }
+}
+
+void Role::onJumpAttack(){
+    if (ChangeState(ROLE_STATE_ATTACK)){
+        runJumpAttackAction();
+    }
+}
+
+void Role::onSpecialAttack(){
+    if (ChangeState(ROLE_STATE_ATTACK)){
+        runSpecialAttackAction();
     }
 }
 
@@ -91,22 +156,20 @@ void Role::onHurt(int hurt){
     if (ChangeState(ROLE_STATE_HURT)){
         runHurtAction();
     }
-    if (m_currentHp <= 0){
-        runDieAction();
-    }
 }
 
 void Role::onDie(){
-    stopAllActions();
-    runDieAction();
-    die();
+    if (ChangeState(ROLE_STATE_HURT)){
+        runDieAction();
+        die();
+    }
 }
 
 void Role::updateBox(BoundingBox &box){
     Vec2 origin = box.origin.origin;
     Size size = box.origin.size;
     if (m_direction == ROLE_DIRECTION_RIGHT){
-        box.actual = Rect(origin.x + getPositionX(), origin.y + getPositionY(), size.width, size.height);
+        box.actual = Rect(origin.x +getPositionX(), origin.y + getPositionY(), size.width, size.height);
     }
     else{
         box.actual = Rect(getContentSize().width - origin.x - size.width + getPositionX(), origin.y + getPositionY(), size.width, size.height);
@@ -114,6 +177,20 @@ void Role::updateBox(BoundingBox &box){
 }
 
 void Role::update(){
+    if (m_currentHp <= 0 && m_moveable){
+        onDie();
+    }
+    if (m_direction == ROLE_DIRECTION_LEFT){
+        if (isFlippedX()){
+            setFlippedX(false);
+        }
+    }
+    else{
+        if (!isFlippedX()){
+            setFlippedX(true);
+        }
+    }
+
     m_lastCollisionState = 0;
     Point newPosition = getNextPosition();
     //检测碰撞
@@ -130,13 +207,7 @@ void Role::update(){
     if (m_lastCollisionState & ROLE_COLLISION_FLOOR){
         if (m_dropping){
             m_dropping = false;
-            setVelocity(Vec2(m_velocity.x, 0));
-            if (m_velocity.x == 0){
-                onStand();
-            }
-            else{
-                onWalk();
-            }
+            onStand();
         }
     }
 
@@ -152,21 +223,23 @@ void Role::update(){
     }
  
     if (m_lastCollisionState & ROLE_COLLISION_DROP){
-        m_dropping = true;
-        onJump();
+        if (!m_dropping){
+            m_dropping = true;
+            onJump();
+        }
     }
 
-    setPosition(finalPosition);
+    setPosition(finalPosition - m_bodyBox.origin.origin);
     updateAllBox();
 }
 
 Point Role::getNextPosition(){
-    Point lastPosition = getPosition();
+    Point lastPosition = m_bodyBox.actual.origin;
     Point newPosition;
-    Size roleSize = getContentSize();
+    Size roleSize = m_bodyBox.actual.size;
 
-    if (m_dropping && m_velocity.y > -10){
-        m_velocity.y -= 1.0;
+    if (m_dropping && m_velocity.y > -4){
+        m_velocity.y -= 0.4;
     }
 
     //计算角色下一帧的位置
@@ -225,13 +298,14 @@ Animation* Role::createNormalAction(const char* format_string, int frame_count, 
 BoundingBox Role::createBoundingBox(Vec2 origin, Size size){
     BoundingBox boundingBox;
     boundingBox.origin = Rect(origin.x, origin.y, size.width, size.height);
-    boundingBox.actual = Rect(origin.x + getPositionX(), origin.y + getPositionY(), size.width, size.height);
+    boundingBox.actual = Rect(origin.x + m_bodyBox.actual.origin.x, origin.y + m_bodyBox.actual.origin.y, size.width, size.height);
     return boundingBox;
 }
 
 void Role::ShowHurt(int hurt){
     const char* str_hurt = String::createWithFormat("%d", hurt)->getCString();
-    m_hurtShow = Label::create(str_hurt, "COMIC SANS MS", 20);
+    m_hurtShow = Label::create(str_hurt, "COMIC SANS MS", 50);
+    m_hurtShow->setColor(Color3B(255, 30, 20));
     m_hurtShow->setAnchorPoint(Vec2::ZERO);
     m_hurtShow->setPosition(Vec2(30, 80));
     addChild(m_hurtShow);
@@ -247,6 +321,11 @@ void Role::ShowHurt(int hurt){
 void Role::EndHurt(){
     removeChild(m_hurtShow, true);
     m_moveable = true;
+}
+
+void Role::EndAttack(){
+    m_moveable = true;
+    onStand();
 }
 
 void Role::setMapSize(Size new_mapSize){
