@@ -7,21 +7,15 @@
 #define _H_ROLE_
 
 #include <cocos2d.h>
+#include "GameUtile.h"
 USING_NS_CC;
-
-//定义盒子模型用于进行攻击，对话等范围判定
-struct BoundingBox {
-    //绝对位置的盒子模型
-    Rect actual;
-    //相对位置的盒子模型
-    Rect origin;
-};
 
 //定义角色的所有可能状态
 enum eRoleState{
     ROLE_STATE_STAND = 0,
     ROLE_STATE_WALK,
     ROLE_STATE_JUMP,
+    ROLE_STATE_DROP,
     ROLE_STATE_CROUCH,
     ROLE_STATE_ATTACK,
     ROLE_STATE_RUSHATTACK,
@@ -77,6 +71,7 @@ public:
     CC_SYNTHESIZE_RETAIN(Action*, m_pStandAction, StandAction);
     CC_SYNTHESIZE_RETAIN(Action*, m_pWalkAction, WalkAction);
     CC_SYNTHESIZE_RETAIN(Action*, m_pJumpAction, JumpAction);
+    CC_SYNTHESIZE_RETAIN(Action*, m_pDropAction, DropAction);
     CC_SYNTHESIZE_RETAIN(Action*, m_pCrouchAction, CrouchAction);
     CC_SYNTHESIZE_RETAIN(Action*, m_pStandupAction, StandupAction);
     CC_SYNTHESIZE_RETAIN(Action*, m_pAttackAction, AttackAction);
@@ -92,8 +87,9 @@ public:
     virtual void runStandAction();
     virtual void runWalkAction();
     virtual void runJumpAction();
+    virtual void runDropAction();
     virtual void runCrouchAction();
-    virtual void runStandUpAction();
+    virtual void runStandupAction();
     virtual void runAttackAction();
     virtual void runWalkAttackAction();
     virtual void runJumpAttackAction();
@@ -105,7 +101,9 @@ public:
     virtual void onStand();
     virtual void onWalk();
     virtual void onJump();
+    virtual void onDrop();
     virtual void onCrouch();
+    virtual void onStandup();
     virtual void onAttack();
     virtual void onWalkAttack();
     virtual void onJumpAttack();
@@ -121,17 +119,12 @@ public:
 
     virtual void die();
 
-
-    //创建常规动画（帧名相同，编号从0开始）
-    Animation* createNormalAction(const char* format_string, int frame_count, int fps);
-    //CallFunc* createIdleCallbackFunc()
-
-    BoundingBox createBoundingBox(Vec2 origin, Size size);
     void updateBox(BoundingBox& box);
 
-    void ShowHurt(int hurt);
-    void EndHurt();
-    void EndAttack();
+    virtual void ShowHurt(int hurt);
+
+    virtual void EnableMoveable();
+    virtual void EndHurt();
 
     //当地图改变时，接受通知
     void setMapSize(Size new_mapsize);

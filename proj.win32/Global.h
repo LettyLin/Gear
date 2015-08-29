@@ -10,6 +10,7 @@
 USING_NS_CC;
 
 class MapLayer;
+class Keyboard;
 class Role;
 class Hero;
 class NPC;
@@ -24,9 +25,9 @@ public:
     Hero* hero;
     NPC* npc;
     Vector<Enemy*> enemies;
-
-    //注册地图管理层，根据主角位置进行更新
     MapLayer* mapLayer;
+    Keyboard* keyLayer;
+
 
     //进入场景
     void EnterScene(int scene_number);
@@ -48,8 +49,17 @@ public:
         return m_bTalking;
     }
 
+    void setSceneIndex(int which_scene){
+        m_nSceneIndex = which_scene;
+    }
+
+    int getSceneIndex(){
+        return m_nSceneIndex;
+    }
+
 private:
     bool m_bTalking;
+    int m_nSceneIndex;
 };
 
 //定义调用该类唯一实例的宏

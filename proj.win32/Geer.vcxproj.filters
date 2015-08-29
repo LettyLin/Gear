@@ -31,6 +31,12 @@
     <Filter Include="src\EnterScene">
       <UniqueIdentifier>{7e1c5109-ce51-4f63-b0dd-28530ada70af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameLayer\Tools">
+      <UniqueIdentifier>{f1ae822a-05a9-40c4-b907-4f5ce52b4195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameLayer\Skill">
+      <UniqueIdentifier>{e4222d31-7247-4f27-912c-10fdf422977b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -79,6 +85,21 @@
       <Filter>src\UiLayer</Filter>
     </ClCompile>
     <ClCompile Include="Formater.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>src\GameLayer\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="HpBottle.cpp">
+      <Filter>src\GameLayer\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>src\GameLayer\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowFire.cpp">
+      <Filter>src\GameLayer\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUtile.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -166,6 +187,24 @@
     </ClInclude>
     <ClInclude Include="Formater.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>src\GameLayer\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="HpBottle.h">
+      <Filter>src\GameLayer\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>src\GameLayer\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowFire.h">
+      <Filter>src\GameLayer\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUtile.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>src\GameLayer\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

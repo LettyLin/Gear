@@ -212,7 +212,7 @@ void GameLayer::addRole(){
     addChild(hero, 10);
 
     for (int i = 0; i < m_pSceneInfo->npc_number; ++i){
-        NPC* npc = NPC::create();
+        NPC* npc = NPC::create(m_pSceneInfo->npcs[i].c_str());
         global->npc = npc;
         npc->setAnchorPoint(Vec2::ZERO);
         npc->setPosition(m_pSceneInfo->m_NPCPoints.at(i));

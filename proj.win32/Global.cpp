@@ -19,12 +19,13 @@ m_bTalking(false)
 //析构函数，释放注册的信息
 Global::~Global(){
     CC_SAFE_RELEASE_NULL(hero);
-    hero = NULL;
 }
 
 //以渐隐的方式切换场景
 //参数为场景编号
 void Global::EnterScene(int scene_number){
+    m_nSceneIndex = scene_number;
+
     Scene* gameScene = GameScene::createScene(scene_number);
     TransitionSlideInR* slide = TransitionSlideInR::create(1.0f, gameScene);
     Director::getInstance()->replaceScene(slide);
@@ -67,7 +68,7 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
     Size mapSize = map->getContentSize();
 
     //检测墙碰撞
-    for (int y = expect_leftTop_tileCoord.y +1; y < expect_rightBottom_tileCoord.y; ++y){
+    for (int y = expect_leftTop_tileCoord.y +2; y < expect_rightBottom_tileCoord.y; ++y){
         for (int x = expect_leftTop_tileCoord.x; x <= expect_rightBottom_tileCoord.x; ++x){
             Point tileCoord = Point(x, y);
             int tileGid = wall->getTileGIDAt(tileCoord);
@@ -196,7 +197,3 @@ void Global::CheckCollision(Role* role, const Point &expect_position, Point &fin
     dropping |= ROLE_COLLISION_DROP;
     return;
 }
-
-//检测精灵与地图碰撞层的碰撞
-//参数为待检测精灵的左下顶点，精灵尺寸，以及重力情况
-//--------算--------法-------待--------完--------善--------

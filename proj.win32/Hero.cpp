@@ -2,15 +2,14 @@
 #include "Global.h"
 #include "NPC.h"
 #include "Enemy.h"
+#include "Keyboard.h"
+#include "Tool.h"
 
 Hero::Hero(){
-    //将hero注册到global中
-    if (NULL == global->hero){
-        ;
-    }
+    global->hero = this;
 }
 Hero::~Hero(){
-    //global->hero = NULL;
+    global->hero = NULL;
 }
 
 //初始化主角各动作的动画
@@ -25,37 +24,50 @@ bool Hero::init(){
     //设置主角初始帧
     this->initWithSpriteFrameName("hero_stand00.png");
 
-    Animation* idleAnimation = createNormalAction("hero_stand00.png", 1, 1);
-
     //创建站立动画，帧数8，帧率10
-    Animation* standAnimation = createNormalAction("hero_stand%02d.png", 8, 10);
+    Animation* standAnimation = GameUtile::createNormalAction("hero_stand%02d.png", 8, 10);
     this->setStandAction(RepeatForever::create(Animate::create(standAnimation)));
 
     //创建行走动画，帧数8，帧率20
-    Animation* walkAnimation = createNormalAction("hero_walk%02d.png", 8, 14);
+    Animation* walkAnimation = GameUtile::createNormalAction("hero_walk%02d.png", 8, 14);
     this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
 
-    Animation* jumpAnimation = createNormalAction("hero_jump%02d.png", 9, 20);
-    this->setJumpAction(Sequence::create(Animate::create(jumpAnimation), 
-        RepeatForever::create(Animate::create(idleAnimation)), 
+    Animation* jumpAnimation = GameUtile::createNormalAction("hero_jump%02d.png", 9, 20);
+    this->setJumpAction(Sequence::create(Animate::create(jumpAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
         NULL));
 
-    Animation* attackAnimation = createNormalAction("hero_attack%02d.png", 12, 20);
+    Animation* dropAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
+    this->setDropAction(RepeatForever::create(Animate::create(dropAnimation)));
+
+    Animation* crouchAnimation = GameUtile::createNormalAction("hero_crouch%02d.png", 4, 20);
+    this->setCrouchAction(Animate::create(crouchAnimation));
+    Animation* standupAnimation = GameUtile::createNormalAction("hero_standup%02d.png", 4, 20);
+    this->setStandupAction(Sequence::create(Animate::create(standupAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)), 
+        NULL));
+
+    Animation* attackAnimation = GameUtile::createNormalAction("hero_attack%02d.png", 12, 20);
     this->setAttackAction(Sequence::create(Animate::create(attackAnimation),
-        CallFuncN::create(CC_CALLBACK_0(Role::EndAttack, this)), 
+        CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)), 
         NULL));
 
-    Animation* walkAttackAnimation = createNormalAction("hero_walkattack%02d.png", 14, 30);
+    Animation* walkAttackAnimation = GameUtile::createNormalAction("hero_walkattack%02d.png", 14, 30);
     this->setWalkAttackAction(Sequence::create(Animate::create(walkAttackAnimation),
-        CallFuncN::create(CC_CALLBACK_0(Role::EndAttack, this)),
+        CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
         NULL));
 
-    Animation* hurtAnimation = createNormalAction("hero_stand00.png", 1, 10);
+    Animation* jumpAttackAnimation = GameUtile::createNormalAction("hero_jumpattack%02d.png", 5, 14);
+    this->setJumpAttackAction(Sequence::create(Animate::create(jumpAttackAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
+        NULL));
+
+    Animation* hurtAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
     this->setHurtAction(Sequence::create(Animate::create(hurtAnimation), 
         CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)), 
         NULL));
 
-    Animation* dieAnimation = createNormalAction("hero_stand00.png", 1, 10);
+    Animation* dieAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
 
     //Add other actions here
 
@@ -66,9 +78,9 @@ bool Hero::init(){
     m_strenth = 20;
     m_defence = 20;
 
-    m_bodyBox = createBoundingBox(Vec2(32, 16), getContentSize() - Size(64, 28));
-    m_attackBox = createBoundingBox(Vec2(getContentSize().width / 2, -50), Size(200, getContentSize().height + 100));
-    m_talkingBox = createBoundingBox(Vec2(-400, -50), Size(800, getContentSize().height + 100));
+    m_bodyBox = GameUtile::createBoundingBox(Vec2(32, 16), getContentSize() - Size(64, 28));
+    m_attackBox = GameUtile::createBoundingBox(Vec2(getContentSize().width / 2, -50), Size(200, getContentSize().height + 100));
+    m_talkingBox = GameUtile::createBoundingBox(Vec2(-400, -50), Size(800, getContentSize().height + 100));
 
     //设置初始速度
     this->setVelocity(Vec2(0, 0));
@@ -99,7 +111,7 @@ void Hero::onWalk(){
 }
 
 void Hero::onJump(){
-    if (!m_moveable){
+    if (!m_moveable && (m_state != ROLE_STATE_CROUCH)){
         return;
     }
 
@@ -110,6 +122,23 @@ void Hero::onJump(){
     Role::onJump();
 }
 
+void Hero::onDrop(){
+    Role::onDrop();
+}
+
+void Hero::onCrouch(){
+    if (!m_moveable){
+        return;
+    }
+    m_velocity = Vec2::ZERO;
+
+    Role::onCrouch();
+}
+
+void Hero::onStandup(){
+    Role::onStandup();
+}
+
 void Hero::onHurt(int hurt){
     if (!m_moveable){
         return;
@@ -118,7 +147,6 @@ void Hero::onHurt(int hurt){
     int actual_hurt = hurt - (m_defence + rand() % 20 - 10);
     m_currentHp -= actual_hurt;
     Role::onHurt(actual_hurt);
-    m_moveable = false;
 }
 
 void Hero::onDie(){
@@ -131,26 +159,7 @@ void Hero::onAttack(){
         return;
     }
     Role::onAttack();
-
-    Vector<Enemy*> enemies = global->enemies;
-
-    if (enemies.empty()){
-        m_moveable = false;
-        return;
-    }
-
-    Vector<Enemy*>::iterator it = enemies.begin();
-    for (; it != enemies.end(); ++it){
-        Rect enemyBox = (*it)->getBodyBox().actual;
-        if (enemyBox.intersectsRect(getAttackBox().actual)){
-            int hurt = m_strenth + rand() % 20 - 10;
-            if (rand() % 100 < 5){
-                hurt *= 2;
-            }
-            (*it)->onHurt(hurt);
-        }
-    }
-    m_moveable = false;
+    CheckAttack(0);
 }
 
 void Hero::onWalkAttack(){
@@ -158,26 +167,13 @@ void Hero::onWalkAttack(){
         return;
     }
     Role::onWalkAttack();
+    CheckAttack(0);
+}
 
-    Vector<Enemy*> enemies = global->enemies;
-
-    if (enemies.empty()){
-        m_moveable = false;
-        return;
-    }
-
-    Vector<Enemy*>::iterator it = enemies.begin();
-    for (; it != enemies.end(); ++it){
-        Rect enemyBox = (*it)->getBodyBox().actual;
-        if (enemyBox.intersectsRect(getAttackBox().actual)){
-            int hurt = m_strenth + rand() % 20 - 10;
-            if (rand() % 100 < 5){
-                hurt *= 2;
-            }
-            (*it)->onHurt(hurt);
-        }
-    }
-    m_moveable = false;
+void Hero::onJumpAttack(){
+    Role::onJumpAttack();
+    m_velocity.x = 0;
+    CheckAttack(0);
 }
 
 void Hero::onTalk(){
@@ -186,6 +182,77 @@ void Hero::onTalk(){
     if (a.intersectsRect(npcBox)){
         global->npc->startTalking();
     }
+}
+
+void Hero::AddHp(int dirta_hp){
+    m_currentHp += dirta_hp;
+    if (m_currentHp > m_maxHp){
+        m_currentHp = m_maxHp;
+    }
+}
+
+void Hero::GetTool(int tool_id){
+    m_tools.pushBack(Tool::create(tool_id));
+}
+
+void Hero::UseTool(int tool_id){
+    for (Tool* tool : m_tools){
+        if (tool->getToolId() == tool_id){
+            tool->use();
+            m_tools.eraseObject(tool, true);
+            CC_SAFE_RELEASE_NULL(tool);
+        }
+    }
+}
+
+void Hero::ShowProperties(){
+}
+
+void Hero::ShowBackpack(){
+}
+
+void Hero::ShowSkillList(){
+}
+
+void Hero::CheckAttack(int base_hurt){
+    Vector<Enemy*> enemies = global->enemies;
+
+    if (enemies.empty()){
+        return;
+    }
+
+    Vector<Enemy*>::iterator it = enemies.begin();
+    for (; it != enemies.end(); ++it){
+        Rect enemyBox = (*it)->getBodyBox().actual;
+        if (enemyBox.intersectsRect(getAttackBox().actual)){
+            int hurt = m_strenth + rand() % 20 - 10;
+            if (rand() % 100 < 5){
+                hurt *= 2;
+            }
+            (*it)->onHurt(hurt);
+        }
+    }
+}
+
+void Hero::CheckKeyState(){
+    Keyboard* keyboard = global->keyLayer;
+    if (keyboard->getKeyState(KEY_STATE_LEFT_ARROW)){
+        setDirection(ROLE_DIRECTION_LEFT);
+        onWalk();
+    }
+    else if (keyboard->getKeyState(KEY_STATE_RIGHT_ARROW)){
+        setDirection(ROLE_DIRECTION_RIGHT);
+        onWalk();
+    }
+    else{
+        m_velocity = Vec2::ZERO;
+        onStand();
+    }
+}
+
+void Hero::EnableMoveable(){
+    m_moveable = true;
+    CheckKeyState();
 }
 
 void Hero::updateAllBox(){

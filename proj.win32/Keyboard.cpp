@@ -3,7 +3,12 @@
 #include "Hero.h"
 #include "NPC.h"
 
-Keyboard::Keyboard(){}
+Keyboard::Keyboard(){
+    for (int key = 0; key < MAX_CHECK_KEY_NUMBER; ++key){
+        m_bKeyState[key] = false;
+    }
+    global->keyLayer = this;
+}
 Keyboard::~Keyboard(){}
 
 bool Keyboard::init(){
@@ -22,41 +27,52 @@ bool Keyboard::init(){
 
 //°´ÏÂ¼üÅÌ
 void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
+    Hero* hero = global->hero;
+
     //ÓÒ¼ü
     if (keycode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW){
-        global->hero->setDirection(ROLE_DIRECTION_RIGHT);
-        if (!global->hero->getDropping()){
-            global->hero->onWalk();
-        }
+        hero->setDirection(ROLE_DIRECTION_RIGHT);
+        hero->onWalk();
+        m_bKeyState[KEY_STATE_RIGHT_ARROW] = true;
     }
     //×ó¼ü
-    if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW){
-        global->hero->setDirection(ROLE_DIRECTION_LEFT);
-        if (!global->hero->getDropping()){
-            global->hero->onWalk();
-        }
+    else if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW){
+        hero->setDirection(ROLE_DIRECTION_LEFT);
+        hero->onWalk();
+        m_bKeyState[KEY_STATE_LEFT_ARROW] = true;
     }
     //ÉÏ¼ü
-    if (keycode == EventKeyboard::KeyCode::KEY_UP_ARROW){
-        global->hero->onJump();
+    else if (keycode == EventKeyboard::KeyCode::KEY_UP_ARROW){
+        hero->onJump();
+        m_bKeyState[KEY_STATE_UP_ARROW] = true;
+    }
+
+    else if (keycode == EventKeyboard::KeyCode::KEY_DOWN_ARROW){
+        hero->onCrouch();
+        m_bKeyState[KEY_STATE_DOWN_ARROW] = true;
     }
     
-    if (keycode == EventKeyboard::KeyCode::KEY_SPACE){
+    else if (keycode == EventKeyboard::KeyCode::KEY_SPACE){
         if (global->IsTalking()){
             global->npc->continueTalking();
         }
         else{
-            global->hero->onTalk();
+            hero->onTalk();
         }
+        m_bKeyState[KEY_STATE_SPACE] = true;
     }
 
-    if (keycode == EventKeyboard::KeyCode::KEY_LEFT_CTRL){
-        if (global->hero->getVelocity().x != 0){
-            global->hero->onWalkAttack();
+    else if (keycode == EventKeyboard::KeyCode::KEY_LEFT_CTRL){
+        if (hero->getState() == ROLE_STATE_JUMP){
+            hero->onJumpAttack();
+        }
+        if (hero->getState() == ROLE_STATE_WALK){
+            hero->onWalkAttack();
         }
         else{
-            global->hero->onAttack();
+            hero->onAttack();
         }
+        m_bKeyState[KEY_STATE_LEFT_CTRL] = true;
     }
 
     //Add other keycodes here
@@ -65,10 +81,31 @@ void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
 
 //ÊÍ·Å°´¼ü
 void Keyboard::onKeyRelease(EventKeyboard::KeyCode keycode, Event* event){
-    if (!global->hero->getDropping()){
-        global->hero->onStand();
+    Hero* hero = global->hero;
+
+    if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW){
+        m_bKeyState[KEY_STATE_LEFT_ARROW] = false;
+        hero->CheckKeyState();
     }
-    if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW || keycode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW){
-        global->hero->setVelocity(Vec2(0, global->hero->getVelocity().y));
+    else if (keycode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW){
+        m_bKeyState[KEY_STATE_RIGHT_ARROW] = false;
+        hero->CheckKeyState();
     }
+    else if (keycode == EventKeyboard::KeyCode::KEY_DOWN_ARROW){
+        hero->onStandup();
+        m_bKeyState[KEY_STATE_DOWN_ARROW] = false;
+    }
+    else if (keycode == EventKeyboard::KeyCode::KEY_UP_ARROW){
+        m_bKeyState[KEY_STATE_UP_ARROW] = false;
+    }
+    else if (keycode == EventKeyboard::KeyCode::KEY_SPACE){
+        m_bKeyState[KEY_STATE_SPACE] = false;
+    }
+    else if (keycode == EventKeyboard::KeyCode::KEY_LEFT_CTRL){
+        m_bKeyState[KEY_STATE_LEFT_CTRL] = false;
+    }
+}
+
+bool Keyboard::getKeyState(eKeyState key){
+    return m_bKeyState[key];
 }

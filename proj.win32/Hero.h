@@ -7,6 +7,8 @@
 
 #include "Role.h"
 
+class Tool;
+
 class Hero : public Role{
 public:
     Hero();
@@ -20,14 +22,35 @@ public:
     virtual void onWalk();
     virtual void onStand();
     virtual void onJump();
-    virtual  void onAttack();
+    virtual void onDrop();
+    virtual void onCrouch();
+    virtual void onStandup();
+    virtual void onAttack();
     virtual void onWalkAttack();
+    virtual void onJumpAttack();
     virtual void onHurt(int hurt);
     virtual void onDie();
     virtual void onTalk();
     //Add other actions here
 
+    void AddHp(int dirta_hp);
+
+    void GetTool(int tool_id);
+    void UseTool(int tool_id);
+
+    void ShowProperties();
+    void ShowBackpack();
+    void ShowSkillList();
+
+    void CheckAttack(int base_hurt);
+    void CheckKeyState();
+
+    virtual void EnableMoveable();
+
     virtual void updateAllBox();
+
+private:
+    Vector<Tool*> m_tools;
 };
 
 #endif

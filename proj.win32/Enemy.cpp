@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "GameUtile.h"
 #include "Global.h"
 #include "Hero.h"
 
@@ -16,23 +17,24 @@ bool Enemy::init(){
 
     initWithSpriteFrameName("enemy_normal.png");
 
-    Animation* stand = createNormalAction("enemy_normal.png", 1, 10);
+    Animation* stand = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
     setStandAction(RepeatForever::create(Animate::create(stand)));
 
     setJumpAction(RepeatForever::create(Animate::create(stand)));
+    setDropAction(RepeatForever::create(Animate::create(stand)));
 
-    Animation* walk = createNormalAction("enemy_walk_%02d.png", 4, 10);
+    Animation* walk = GameUtile::createNormalAction("enemy_walk_%02d.png", 4, 10);
     setWalkAction(RepeatForever::create(Animate::create(walk)));
 
-    Animation* attackAnimation = createNormalAction("npc_normal.png", 1, 10);
+    Animation* attackAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
     this->setAttackAction(RepeatForever::create(Animate::create(attackAnimation)));
 
-    Animation* hurtAnimation = createNormalAction("npc_normal.png", 1, 5);
+    Animation* hurtAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 5);
     this->setHurtAction(Sequence::create(Animate::create(hurtAnimation),
         CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)),
         NULL));
 
-    Animation* dieAnimation = createNormalAction("npc_normal.png", 1, 10);
+    Animation* dieAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
     this->setDieAction(Animate::create(attackAnimation));
 
     m_maxHp = 20;
@@ -42,8 +44,8 @@ bool Enemy::init(){
     m_strenth = 10;
     m_defence = 10;
 
-    m_bodyBox = createBoundingBox(Vec2(0, 0), getContentSize());
-    m_eyesightBox = createBoundingBox(Vec2(32, 64), Size(600, 600));
+    m_bodyBox = GameUtile::createBoundingBox(Vec2(0, 0), getContentSize());
+    m_eyesightBox = GameUtile::createBoundingBox(Vec2(32, 64), Size(600, 600));
 
     m_bSeeHero = false;
 

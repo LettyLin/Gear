@@ -2,24 +2,26 @@
 #define _H_NPC_
 
 #include "Role.h"
-#include "TalkingLayer.h"
 
-#define MAX_CONVERSATION 20
+class TalkingLayer;
+struct Conversation;
 
 class NPC : public Role{
 public:
     NPC();
     ~NPC();
-    virtual bool init();
-    CREATE_FUNC(NPC);
+    virtual bool init(char const* npcName);
+    static NPC* create(char const* npcName);
+    void LoadConversations(char const*npcName);
 
     void startTalking();
     void continueTalking();
     void endTalking();
 
 private:
-    Conversation m_conversation[MAX_CONVERSATION][20];
+    Conversation** m_conversation;
     int m_nTalkingTimes;
+    int m_nMaxTalkingTimes;
 
     TalkingLayer* m_talkingLayer;
 };
