@@ -102,6 +102,33 @@
     <ClCompile Include="GameUtile.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>src\GameLayer\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="StateBar.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="UiLayer.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuLayer.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Backpack.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>src\OperateLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Property.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonLayer.cpp">
+      <Filter>src\UiLayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -152,28 +179,7 @@
     <ClInclude Include="StateBar.h">
       <Filter>src\UiLayer</Filter>
     </ClInclude>
-    <ClInclude Include="SettingUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="Muisic.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveLoad.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
     <ClInclude Include="AcceleratorUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="BackpackUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveUi.h">
-      <Filter>src\UiLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillListUi.h">
       <Filter>src\UiLayer</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
@@ -205,6 +211,21 @@
     </ClInclude>
     <ClInclude Include="Fire.h">
       <Filter>src\GameLayer\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Backpack.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>src\OperateLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Property.h">
+      <Filter>src\UiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonLayer.h">
+      <Filter>src\UiLayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

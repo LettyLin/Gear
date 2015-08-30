@@ -13,29 +13,37 @@ bool Enemy::init(){
         return false;
     }
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("enemy.plist", "enemy.png");
+    initWithSpriteFrameName("enemy_stand00.png");
 
-    initWithSpriteFrameName("enemy_normal.png");
-
-    Animation* stand = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
+    Animation* stand = GameUtile::createNormalAction("enemy_stand%02d.png", 6, 10);
     setStandAction(RepeatForever::create(Animate::create(stand)));
 
-    setJumpAction(RepeatForever::create(Animate::create(stand)));
-    setDropAction(RepeatForever::create(Animate::create(stand)));
-
-    Animation* walk = GameUtile::createNormalAction("enemy_walk_%02d.png", 4, 10);
-    setWalkAction(RepeatForever::create(Animate::create(walk)));
-
-    Animation* attackAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
-    this->setAttackAction(RepeatForever::create(Animate::create(attackAnimation)));
-
-    Animation* hurtAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 5);
-    this->setHurtAction(Sequence::create(Animate::create(hurtAnimation),
-        CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)),
+    Animation* jumpOrWalk = GameUtile::createNormalAction("enemy_walk%02d.png", 7, 10);
+    setWalkAction(RepeatForever::create(Animate::create(jumpOrWalk)));
+    setJumpAction(Sequence::create(Animate::create(jumpOrWalk),
+        CallFuncN::create(CC_CALLBACK_0(Enemy::EnableMoveable, this)),
         NULL));
 
-    Animation* dieAnimation = GameUtile::createNormalAction("enemy_normal.png", 1, 10);
-    this->setDieAction(Animate::create(attackAnimation));
+
+    //setDropAction(RepeatForever::create(Animate::create(stand)));
+
+    Animation* attackAnimation = GameUtile::createNormalAction("enemy_attack%02d.png", 10, 10);
+    this->setAttackAction(Sequence::create(Animate::create(attackAnimation), 
+       CallFuncN::create(CC_CALLBACK_0(Enemy::EnableMoveable, this)),
+       NULL));
+
+    Animation* hurtAnimation = GameUtile::createNormalAction("enemy_die%02d.png", 5, 20);
+    this->setHurtAction(Sequence::create(Animate::create(hurtAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Role::EnableMoveable, this)),
+        NULL));
+
+    Animation* standupAnimation = GameUtile::createNormalAction("enemy_standup%02d.png", 10, 10);
+    this->setStandupAction(Sequence::create(Animate::create(attackAnimation),
+        CallFuncN::create(CC_CALLBACK_0(Enemy::EnableMoveable, this)),
+        NULL));
+
+    Animation* dieAnimation = GameUtile::createNormalAction("enemy_die%02d.png", 7, 20);
+    this->setDieAction(Animate::create(dieAnimation));
 
     m_maxHp = 20;
     m_currentHp = 20;
@@ -43,9 +51,11 @@ bool Enemy::init(){
     m_currentMp = 20;
     m_strenth = 10;
     m_defence = 10;
+    m_moveVelocity = 4;
 
     m_bodyBox = GameUtile::createBoundingBox(Vec2(0, 0), getContentSize());
     m_eyesightBox = GameUtile::createBoundingBox(Vec2(32, 64), Size(600, 600));
+    m_attackBox = GameUtile::createBoundingBox(Vec2(getContentSize().width / 2, -50), Size(200, getContentSize().height + 100));
 
     m_bSeeHero = false;
 
@@ -69,7 +79,7 @@ void Enemy::onWalk(){
         return;
     }
 
-    setVelocity(Vec2(4, 0));
+    setVelocity(Vec2(m_moveVelocity, 0));
     Role::onWalk();
 }
 
@@ -93,7 +103,7 @@ void Enemy::onAttack(){
     Hero* hero = global->hero;
     Rect heroBox = hero->getBodyBox().actual;
     if (m_attackBox.actual.intersectsRect(heroBox)){
-        int hurt = m_strenth + rand() % 20 - 10;
+        int hurt = m_strenth + rand() % 200 - 10;
         if (rand() % 100 < 5){
             hurt *= 2;
         }
@@ -104,27 +114,28 @@ void Enemy::onAttack(){
 }
 
 void Enemy::onHurt(int hurt){
-    if (!m_moveable){
-        return;
-    }
-
     int actual_hurt = hurt - (m_defence + rand() % 20 - 10);
     m_currentHp -= actual_hurt;
     Role::onHurt(actual_hurt);
-
-    m_moveable = false;
 }
 
 void Enemy::onDie(){
+    //runDieAction();
     Role::onDie();
 }
 
 void Enemy::die(){
-    getParent()->removeChild(this, true);
-    global->enemies.eraseObject(this, true);
+    m_moveable = false;
+
+    /*getParent()->removeChild(this, true);
+    global->enemies.eraseObject(this, true);*/
 }
 
 void Enemy::decide(){
+    if (!m_moveable){
+        return;
+    }
+
     bool lastSeeHero = m_bSeeHero;
     int decide;
 

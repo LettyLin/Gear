@@ -4,12 +4,15 @@
 #include "Enemy.h"
 #include "Keyboard.h"
 #include "Tool.h"
+#include "Skill.h"
+#include "Backpack.h"
+#include "Property.h"
+#include "UiLayer.h"
+#include "Formater.h"
 
 Hero::Hero(){
-    global->hero = this;
 }
 Hero::~Hero(){
-    global->hero = NULL;
 }
 
 //初始化主角各动作的动画
@@ -19,7 +22,7 @@ bool Hero::init(){
     }
     
     //将包含主角所有动作帧的合图载入到帧缓存池中
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("hero.plist", "hero.png");
+    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("hero.plist", "hero.png");
 
     //设置主角初始帧
     this->initWithSpriteFrameName("hero_stand00.png");
@@ -37,8 +40,8 @@ bool Hero::init(){
         CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
         NULL));
 
-    Animation* dropAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
-    this->setDropAction(RepeatForever::create(Animate::create(dropAnimation)));
+    //Animation* dropAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
+    //this->setDropAction(RepeatForever::create(Animate::create(dropAnimation)));
 
     Animation* crouchAnimation = GameUtile::createNormalAction("hero_crouch%02d.png", 4, 20);
     this->setCrouchAction(Animate::create(crouchAnimation));
@@ -52,22 +55,23 @@ bool Hero::init(){
         CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)), 
         NULL));
 
-    Animation* walkAttackAnimation = GameUtile::createNormalAction("hero_walkattack%02d.png", 14, 30);
+    Animation* walkAttackAnimation = GameUtile::createNormalAction("hero_walkattack%02d.png", 6, 30);
     this->setWalkAttackAction(Sequence::create(Animate::create(walkAttackAnimation),
         CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
         NULL));
 
-    Animation* jumpAttackAnimation = GameUtile::createNormalAction("hero_jumpattack%02d.png", 5, 14);
+    Animation* jumpAttackAnimation = GameUtile::createNormalAction("hero_jumpattack%02d.png", 4, 14);
     this->setJumpAttackAction(Sequence::create(Animate::create(jumpAttackAnimation),
         CallFuncN::create(CC_CALLBACK_0(Hero::EnableMoveable, this)),
         NULL));
 
-    Animation* hurtAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
+    Animation* hurtAnimation = GameUtile::createNormalAction("hero_hurt%02d.png", 2, 20);
     this->setHurtAction(Sequence::create(Animate::create(hurtAnimation), 
         CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)), 
         NULL));
 
-    Animation* dieAnimation = GameUtile::createNormalAction("hero_stand00.png", 1, 10);
+    Animation* dieAnimation = GameUtile::createNormalAction("hero_die%02d.png", 5, 10);
+    this->setHurtAction(Animate::create(dieAnimation));
 
     //Add other actions here
 
@@ -77,10 +81,14 @@ bool Hero::init(){
     m_maxMp = 100;
     m_strenth = 20;
     m_defence = 20;
+    m_moveVelocity = 5;
 
     m_bodyBox = GameUtile::createBoundingBox(Vec2(32, 16), getContentSize() - Size(64, 28));
-    m_attackBox = GameUtile::createBoundingBox(Vec2(getContentSize().width / 2, -50), Size(200, getContentSize().height + 100));
+    m_attackBox = GameUtile::createBoundingBox(Vec2(80, 20), Size(80, getContentSize().height + 20));
     m_talkingBox = GameUtile::createBoundingBox(Vec2(-400, -50), Size(800, getContentSize().height + 100));
+
+    GetTool(TOOL_HPBOTTLE);
+    GetSkill(SKILL_THROW_FIRE);
 
     //设置初始速度
     this->setVelocity(Vec2(0, 0));
@@ -88,6 +96,26 @@ bool Hero::init(){
     //set other properties here
 
     return true;
+}
+
+void Hero::Inherit(Hero* hero){
+    if (hero == NULL){
+        return;
+    }
+
+    m_currentHp = hero->getCurrentHp();
+    m_maxHp = hero->getMaxHp();
+    m_currentMp = hero->getCurrentMp();
+    m_maxMp = hero->getMaxMp();
+    setStrenth(hero->getStrenth());
+    setDefence(hero->getDefence());
+    setMoveVelocity(hero->getMoveVelocity());
+    for (Tool* tool : hero->getTools()){
+        GetTool(tool->getToolId());
+    }
+    for (Skill* skill : hero->getSkills()){
+        GetSkill(skill->getSkillId());
+    }
 }
 
 //调用站立动作
@@ -106,7 +134,7 @@ void Hero::onWalk(){
         return;
     }
 
-    setVelocity(Vec2(5, 0));
+    setVelocity(Vec2(m_moveVelocity, 0));
     Role::onWalk();
 }
 
@@ -117,7 +145,7 @@ void Hero::onJump(){
 
     if (!m_dropping){
         m_dropping = true;
-        setVelocity(Vec2(3, 8));
+        setVelocity(Vec2(m_velocity.x, 8));
     }
     Role::onJump();
 }
@@ -150,6 +178,7 @@ void Hero::onHurt(int hurt){
 }
 
 void Hero::onDie(){
+    m_moveable = false;
     setVelocity(Vec2::ZERO);
     Role::onDie();
 }
@@ -191,6 +220,9 @@ void Hero::AddHp(int dirta_hp){
     }
 }
 
+
+void Hero::die(){}
+
 void Hero::GetTool(int tool_id){
     m_tools.pushBack(Tool::create(tool_id));
 }
@@ -205,11 +237,75 @@ void Hero::UseTool(int tool_id){
     }
 }
 
+void Hero::GetSkill(int skill_id){
+    for (Skill* skill : m_skills){
+        if (skill->getSkillId() == skill_id){
+            return;
+        }
+    }
+    m_skills.pushBack(Skill::create(skill_id));
+}
+
+void Hero::UseSkill(int skill_id){
+    if (!m_moveable){
+        return;
+    }
+
+    for (Skill* skill : m_skills){
+        if (skill->getSkillId() == skill_id){
+            skill->use();
+        }
+    }
+}
+
 void Hero::ShowProperties(){
+    if (global->property != NULL){
+        global->uiLayer->removeChild(global->property, true);
+        global->property = NULL;
+        return;
+    }
+    Property* property = Property::create();
+    property->addItem(Label::create(Formater::IntToString(m_currentHp), "Comic Sans MS", 16));
+    property->addItem(Label::create(Formater::IntToString(m_currentMp), "Comic Sans MS", 16));
+    property->addItem(Label::create(Formater::IntToString(m_strenth), "Comic Sans MS", 16));
+    property->addItem(Label::create(Formater::IntToString(m_defence), "Comic Sans MS", 16));
+    property->addItem(Label::create(Formater::IntToString(m_moveVelocity), "Comic Sans MS", 16));
+
+    global->uiLayer->addChild(property);
+    property->setAnchorPoint(Vec2(0.9, -0.1));
+    property->setRotation(-90);
+    property->setPosition(Vec2(1280, 0));
+    RotateBy* rotate_shelf_wise = RotateBy::create(0.3f, 90);
+    property->runAction(Sequence::create(rotate_shelf_wise,
+        CallFuncN::create(CC_CALLBACK_0(Property::ResetPosition, property)),
+        NULL));
 }
 
 void Hero::ShowBackpack(){
+    if (global->backpack != NULL){
+        global->uiLayer->removeChild(global->backpack, true);
+        global->backpack = NULL;
+        return;
+    }
+
+    backpack = Backpack::create();
+
+    int i = 0;
+    for (Tool* tool : m_tools){
+        tool->setTag(i);
+        backpack->addItem(tool);
+    }
+
+    global->uiLayer->addChild(backpack);
+    backpack->setAnchorPoint(Vec2(1, -1));
+    backpack->setRotation(-90);
+    backpack->setPosition(Vec2(1280, 0));
+    RotateBy* rotate_shelf_wise = RotateBy::create(0.3f, 90);
+    backpack->runAction(Sequence::create(rotate_shelf_wise, 
+        CallFuncN::create(CC_CALLBACK_0(Backpack::ResetPosition, backpack)),
+        NULL));
 }
+
 
 void Hero::ShowSkillList(){
 }
@@ -223,6 +319,9 @@ void Hero::CheckAttack(int base_hurt){
 
     Vector<Enemy*>::iterator it = enemies.begin();
     for (; it != enemies.end(); ++it){
+        if ((*it)->getState() == ROLE_STATE_DIE){
+            continue;
+        }
         Rect enemyBox = (*it)->getBodyBox().actual;
         if (enemyBox.intersectsRect(getAttackBox().actual)){
             int hurt = m_strenth + rand() % 20 - 10;
@@ -235,12 +334,11 @@ void Hero::CheckAttack(int base_hurt){
 }
 
 void Hero::CheckKeyState(){
-    Keyboard* keyboard = global->keyLayer;
-    if (keyboard->getKeyState(KEY_STATE_LEFT_ARROW)){
+    if (Keyboard::getKeyState(KEY_STATE_LEFT_ARROW)){
         setDirection(ROLE_DIRECTION_LEFT);
         onWalk();
     }
-    else if (keyboard->getKeyState(KEY_STATE_RIGHT_ARROW)){
+    else if (Keyboard::getKeyState(KEY_STATE_RIGHT_ARROW)){
         setDirection(ROLE_DIRECTION_RIGHT);
         onWalk();
     }

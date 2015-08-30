@@ -13,6 +13,7 @@ class GameScene : public Scene{
 public:
     //选择需要创建的场景
     static Scene* createScene(int which_scene);
+    static Scene* createSceneWithFile(int which_scene, const char* file_name);
 };
 
 #endif

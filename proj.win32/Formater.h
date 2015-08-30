@@ -7,7 +7,9 @@ USING_NS_CC;
 class Formater{
 public:
     static std::string getString(const std::string &text);
+    static std::string getString(const std::wstring &text);
     static int getInt(const std::string &text);
+    static int getInt(const std::wstring &text);
     static bool getBool(const std::string &text);
     static Point getPoint(const std::string &text);
 

@@ -28,6 +28,9 @@ private:
     Sprite* m_talkingBackground;
     Label* m_text;
 
+    Sprite* m_hero;
+    Sprite* m_npc;
+
     Conversation* m_conversations;
     int m_nConversationTimes;
 

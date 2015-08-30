@@ -1,4 +1,5 @@
 #include "Formater.h"
+#include "GameUtile.h"
 
 std::string Formater::getString(const std::string &text){
     std::string result;
@@ -7,9 +8,29 @@ std::string Formater::getString(const std::string &text){
     return result;
 }
 
+std::string Formater::getString(const std::wstring &text){
+    std::string result;
+    std::string _text;
+    GameUtile::WStringToString(text, _text);
+
+    result = getString(_text);
+
+    return result;
+}
+
 int Formater::getInt(const std::string &text){
     int result;
     result = atoi(text.c_str());
+
+    return result;
+}
+
+int Formater::getInt(const std::wstring &text){
+    int result;
+    std::string _text;
+    GameUtile::WStringToString(text, _text);
+
+    result = getInt(_text);
 
     return result;
 }
@@ -31,28 +52,28 @@ Point Formater::getPoint(const std::string &text){
     return result;
 }
 
-std::string StringToString(const std::string &content){
+std::string Formater::StringToString(const std::string &content){
     std::string result;
     result = String::createWithFormat("\"%s\"", content)->getCString();
 
     return result;
 }
 
-std::string IntToString(const int content){
+std::string Formater::IntToString(const int content){
     std::string result;
     result = String::createWithFormat("%d", content)->getCString();
 
     return result;
 }
 
-std::string BoolToString(const bool content){
+std::string Formater::BoolToString(const bool content){
     std::string result;
     result = content ? "true" : "false";
 
     return result;
 }
 
-std::string PointToString(const Point content){
+std::string Formater::PointToString(const Point content){
     std::string result;
     result = String::createWithFormat("(%f,%f)", content.x, content.y)->getCString();
 

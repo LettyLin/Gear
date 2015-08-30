@@ -34,6 +34,28 @@ bool GameLayer::init(int which_scene){
     return true;
 }
 
+bool GameLayer::init(int which_scene, const char* file_name){
+    if (!Layer::init()){
+        return false;
+    }
+
+    m_nSceneIndex = which_scene;
+
+    InitSceneInfo();
+
+    LoadSceneInfo(which_scene);
+    addMap(which_scene);
+
+    addRoleWithFile(file_name);
+    ReleaseSceneInfo();
+
+
+    //启用cocos2d自带的更新函数
+    this->scheduleUpdate();
+
+    return true;
+}
+
 void GameLayer::InitSceneInfo(){
     m_pSceneInfo = new SceneInfo;
 
@@ -51,6 +73,19 @@ void GameLayer::InitSceneInfo(){
 GameLayer* GameLayer::create(int which_scene){
     GameLayer* gameLayer = new GameLayer;
     if (gameLayer != NULL && gameLayer->init(which_scene)){
+        gameLayer->autorelease();
+    }
+    else{
+        delete gameLayer;
+        gameLayer = NULL;
+    }
+
+    return gameLayer;
+}
+
+GameLayer* GameLayer::createWithFile(int which_scene, const char* file_name){
+    GameLayer* gameLayer = new GameLayer;
+    if (gameLayer != NULL && gameLayer->init(which_scene, file_name)){
         gameLayer->autorelease();
     }
     else{
@@ -198,16 +233,21 @@ void GameLayer::addMap(int which_scene){
 
 void GameLayer::addRole(){
     Hero* hero;
-    if (NULL == global->hero){
+    if (global->hero == NULL){
+        global->hero = Hero::create();
+        global->hero->retain();
+        hero = global->hero;
     }
-    global->hero = Hero::create();
-    global->hero->retain();
-    hero = global->hero;
+    else{
+        hero = Hero::create();
+        hero->Inherit(global->hero);
+        global->hero = hero;
+    }
+
    
     hero->setAnchorPoint(Vec2::ZERO);
     hero->setPosition(m_pSceneInfo->enter_point);
     hero->updateAllBox();
-    hero->setMapSize(m_pMapLayer->getMap()->getContentSize());
     hero->onStand();
     addChild(hero, 10);
 
@@ -233,13 +273,142 @@ void GameLayer::addRole(){
     }
 }
 
+void GameLayer::addRoleWithFile(const char* file_name){    
+    Hero* hero;
+    global->hero = Hero::create();
+    global->hero->retain();
+    hero = global->hero;
+
+    hero->setAnchorPoint(Vec2::ZERO);
+
+
+    NPC* npc = NPC::create("npc");
+    global->npc = npc;
+    npc->setAnchorPoint(Vec2::ZERO);
+    npc->setPosition(m_pSceneInfo->m_NPCPoints.at(0));
+    npc->updateAllBox();
+    addChild(npc, 8);
+
+    std::ifstream Reader(file_name);
+    CC_ASSERT(Reader.is_open());
+    std::string buffer;
+    std::string discard;
+    for (; !Reader.eof();){
+        Reader >> buffer;
+        Reader >> discard;
+        if (buffer == "Scene"){
+            Reader >> discard;
+            continue;
+        }
+        else if (buffer == "Point"){
+            Reader >> buffer;
+            hero->setPosition(Formater::getPoint(buffer));
+            continue;
+        }
+        else if (buffer == "TalkingTimes"){
+            Reader >> buffer;
+            npc->setTalkingTimes(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "CurrentHp"){
+            Reader >> buffer;
+            hero->setCurrentHp(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "MaxHp"){
+            Reader >> buffer;
+            hero->setMaxHp(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "CurrentMp"){
+            Reader >> buffer;
+            hero->setCurrentMp(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "MaxMp"){
+            Reader >> buffer;
+            hero->setMaxMp(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "Strenth"){
+            Reader >> buffer;
+            hero->setStrenth(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "Defence"){
+            Reader >> buffer;
+            hero->setDefence(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "Velocity"){
+            Reader >> buffer;
+            hero->setMoveVelocity(Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "Direction"){
+            Reader >> buffer;
+            hero->setDirection((eRoleDirection)Formater::getInt(buffer));
+            continue;
+        }
+        else if (buffer == "Tools"){
+            Reader >> discard;
+            for (;;){
+                Reader >> buffer;
+                if (buffer == "id"){
+                    Reader >> discard;
+                    Reader >> buffer;
+                    hero->GetTool(Formater::getInt(buffer));
+                    continue;
+                }
+                else if (buffer == "}"){
+                    break;
+                }
+            }
+        }
+        else if (buffer == "Skills"){
+            Reader >> discard;
+            for (;;){
+                Reader >> buffer;
+                if (buffer == "id"){
+                    Reader >> discard;
+                    Reader >> buffer;
+                    hero->GetSkill(Formater::getInt(buffer));
+                    continue;
+                }
+                else if (buffer == "}"){
+                    break;
+                }
+            }
+        }
+    }
+
+    hero->updateAllBox();
+    hero->onStand();
+    addChild(hero, 10);
+
+    for (int i = 0; i < m_pSceneInfo->enemy_number; ++i){
+        for (int j = 0; j < m_pSceneInfo->enemies[i].number; ++j){
+            Enemy* enemy = Enemy::create();
+            global->enemies.insert(i, enemy);
+            enemy->setAnchorPoint(Vec2::ZERO);
+            int random = rand() % m_pSceneInfo->m_EnemyPoints.size();
+            enemy->setPosition(m_pSceneInfo->m_EnemyPoints.at(random));
+            enemy->updateAllBox();
+            addChild(enemy, 9);
+        }
+    }
+}
+
 void GameLayer::update(float dt){
+    if (global->getGamePause()){
+        return;
+    }
     //更新主角状态
     Hero* hero = global->hero;
     hero->update();
     if (hero->getBodyBox().actual.origin.x + hero->getBodyBox().origin.size.width == m_pMapLayer->getMap()->getContentSize().width
         && m_nSceneIndex != MAX_SCENE){
-        global->EnterScene(m_nSceneIndex + 1);
+        GameUtile::EnterScene(m_nSceneIndex + 1);
     }
 
     if (global->npc != NULL){

@@ -40,6 +40,7 @@ Role::~Role(){
         CC_SAFE_RELEASE_NULL(m_pSpecialAttackAction);
         CC_SAFE_RELEASE_NULL(m_pHurtAction);
         CC_SAFE_RELEASE_NULL(m_pDieAction);
+        //CC_SAFE_RELEASE_NULL(m_hurtShow);
 }
 
 //根据当前状态判断是否可以转换到期望状态
@@ -131,7 +132,7 @@ void Role::onJump(){
 
 void Role::onDrop(){
     if (ChangeState(ROLE_STATE_DROP)){
-        runDropAction();
+        //runDropAction();
     }
     m_moveable = false;
 }
@@ -176,6 +177,10 @@ void Role::onAttack(){
 }
 
 void Role::onHurt(int hurt){
+    if (m_hurtShow != NULL){
+        removeChild(m_hurtShow, true);
+    }
+
     ShowHurt(hurt);
     if (ChangeState(ROLE_STATE_HURT)){
         runHurtAction();
@@ -184,11 +189,14 @@ void Role::onHurt(int hurt){
 }
 
 void Role::onDie(){
-    if (ChangeState(ROLE_STATE_HURT)){
+    EndHurt();
+
+    if (ChangeState(ROLE_STATE_DIE)){
         runDieAction();
         die();
     }
     m_moveable = false;
+    m_velocity = Vec2::ZERO;
 }
 
 void Role::updateBox(BoundingBox &box){
@@ -205,7 +213,9 @@ void Role::updateBox(BoundingBox &box){
 void Role::update(){
     if (m_currentHp <= 0 && m_moveable){
         onDie();
+        return;
     }
+
     if (m_direction == ROLE_DIRECTION_LEFT){
         if (isFlippedX()){
             setFlippedX(false);
@@ -223,7 +233,7 @@ void Role::update(){
     checkCollisionWithMap(newPosition);
 
     Point finalPosition;
-    global->CheckCollision(this, newPosition, finalPosition, m_lastCollisionState);
+    GameUtile::CheckCollision(this, newPosition, finalPosition, m_lastCollisionState);
 
 
     if (m_lastCollisionState & ROLE_COLLISION_WALL){
@@ -314,14 +324,18 @@ void Role::ShowHurt(int hurt){
     m_hurtShow->setColor(Color3B(255, 30, 20));
     m_hurtShow->setAnchorPoint(Vec2::ZERO);
     m_hurtShow->setPosition(Vec2(30, 80));
-    addChild(m_hurtShow);
-
+   
     MoveBy* fly_0 = MoveBy::create(0.2, Vec2(30, 20));
     MoveBy* fly_1 = MoveBy::create(0.1, Vec2(10, 0));
     MoveBy* fly_2 = MoveBy::create(0.3, Vec2(10, 30));
     ScaleTo* scale = ScaleTo::create(0.6, 0.5);
 
-    m_hurtShow->runAction(Spawn::create(Sequence::create(fly_0, fly_1, fly_2, NULL), scale, NULL));
+    addChild(m_hurtShow);
+
+    m_hurtShow->runAction(Sequence::create(
+        Spawn::create(Sequence::create(fly_0, fly_1, fly_2, NULL), scale, NULL),
+        CallFuncN::create(CC_CALLBACK_0(Role::EndHurt, this)),
+        NULL));
 }
 
 void Role::EnableMoveable(){
@@ -331,7 +345,6 @@ void Role::EnableMoveable(){
 
 void Role::EndHurt(){
     removeChild(m_hurtShow, true);
-    m_moveable = true;
 }
 
 void Role::setMapSize(Size new_mapSize){

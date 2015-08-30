@@ -9,6 +9,8 @@ public:
     ~HpBottle();
     virtual bool init();
     CREATE_FUNC(HpBottle);
+
+    virtual void use();
 };
 
 #endif

@@ -13,14 +13,17 @@ enum eSkillType{
 };
 
 class Skill : public Sprite{
+public:
     Skill();
-    Skill();
+    ~Skill();
 
     static Skill* create(int skill_id);
     virtual void use();
 
+    CC_SYNTHESIZE(eSkillId, m_skillId, SkillId);
     CC_SYNTHESIZE(eSkillType, m_skillType, SkillType);
     CC_SYNTHESIZE(int, m_skillValue, SkillValue);
+    CC_SYNTHESIZE(int, m_mpConsume, MpConsume);
     CC_SYNTHESIZE_RETAIN(Action*, m_skillAction, SkillAction);
 };
 

@@ -15,7 +15,15 @@ enum eKeyState{
     KEY_STATE_DOWN_ARROW,
     KEY_STATE_LEFT_CTRL,
     KEY_STATE_SPACE,
+    KEY_STATE_Z,
     MAX_CHECK_KEY_NUMBER
+};
+
+enum eAccelerateKey{
+    KEY_X = 0,
+    KEY_C,
+    KEY_V,
+    MAX_KEY_ACCELERATE
 };
 
 class Keyboard : public Layer{
@@ -30,10 +38,9 @@ public:
     //释放按键事件
     void onKeyRelease(EventKeyboard::KeyCode keycode, Event* event);
 
-    bool getKeyState(eKeyState key);
-
-private:
-    bool m_bKeyState[MAX_CHECK_KEY_NUMBER];
+    static bool getKeyState(eKeyState key);
+    static bool m_bKeyState[MAX_CHECK_KEY_NUMBER];
+    //static eToolsId m_AccelerateKey[MAX_KEY_ACCELERATE];
 };
 
 #endif

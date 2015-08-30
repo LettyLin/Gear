@@ -1,0 +1,16 @@
+Scene = 1
+Point = (2287.000000,209.000000)
+TalkingTimes = 0
+CurrentHp = 100
+MaxHp = 100
+CurrentMp = 100
+MaxMp = 100
+Strenth = 20
+Defence = 20
+Velocity = 5
+Direction = 1
+Tools = {
+}
+Skills = {
+id = 0
+}

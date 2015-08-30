@@ -9,8 +9,10 @@ public:
     virtual bool init();
     CREATE_FUNC(ThrowFire);
 
-    void createFire(int base_hurt);
-    void EndSkill();
+    void createFire();
+
+    virtual void use();
+    virtual void EndSkill();
 };
 
 #endif

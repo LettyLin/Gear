@@ -18,12 +18,4 @@ Tool* Tool::create(int tool_id){
 }
 
 void Tool::use(){
-    switch (m_toolType){
-    case TOOL_TYPE_ADDHP:
-        global->hero->AddHp(m_toolValue);
-        break;
-
-    default:
-        break;
-    }
 }

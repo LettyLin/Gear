@@ -1,6 +1,7 @@
 #include "NPC.h"
 #include "TalkingLayer.h"
 #include "Global.h"
+#include "UiLayer.h"
 #include "Formater.h"
 #include <fstream>
 
@@ -22,21 +23,21 @@ bool NPC::init(char const* npcName){
 
     std::string npcNameCopy = (char*)npcName;
 
-    SpriteFrame* sprite = SpriteFrame::create("npc_stand00.png", Rect(0, 0, 64, 128));
-    SpriteFrameCache::getInstance()->addSpriteFrame(sprite, "npc_stand00.png");
+    //SpriteFrame* sprite = SpriteFrame::create("npc_stand00.png", Rect(0, 0, 64, 128));
+    //SpriteFrameCache::getInstance()->addSpriteFrame(sprite, "npc_stand00.png");
 
     std::string npcImgFormat = npcNameCopy + "_stand%02d.png";
 
     initWithSpriteFrameName(npcNameCopy + "_stand00.png");
 
-    Animation* stand = createNormalAction(npcImgFormat.c_str(), 1, 10);
+    Animation* stand = GameUtile::createNormalAction(npcImgFormat.c_str(), 8, 10);
     setStandAction(RepeatForever::create(Animate::create(stand)));
     setJumpAction(RepeatForever::create(Animate::create(stand)));
 
     m_maxHp = 1;
     m_currentHp = 1;
 
-    m_bodyBox = createBoundingBox(Vec2(0, 0), getContentSize());
+    m_bodyBox = GameUtile::createBoundingBox(Vec2(0, 0), getContentSize());
     m_nTalkingTimes = 0;
 
     runStandAction();
@@ -105,7 +106,10 @@ void NPC::LoadConversations(char const* npcName){
                                 if (buffer == "end;"){
                                     break;
                                 }
-                                m_conversation[i][j].text.append(buffer);
+                                std::wstring str;
+                                GameUtile::StringToWString(buffer, str);
+                                m_conversation[i][j].text += " \n ";
+                                m_conversation[i][j].text.append(GameUtile::WideByte2UTF8(str));
                             }
                         }
                         m_conversation[i][nContentNumber].text = "NULL";
@@ -134,7 +138,7 @@ void NPC::startTalking(){
     }
 
     m_talkingLayer = TalkingLayer::create(m_conversation[m_nTalkingTimes]);
-    getParent()->getParent()->addChild(m_talkingLayer);
+    global->uiLayer->addChild(m_talkingLayer, 128);
     global->setTalking(true);
     ++m_nTalkingTimes;
 };
@@ -147,7 +151,7 @@ void NPC::continueTalking(){
 
 void NPC::endTalking(){
     m_talkingLayer->EndConversation();
-    getParent()->getParent()->removeChild(m_talkingLayer, true);
+    global->uiLayer->removeChild(m_talkingLayer, true);
     m_talkingLayer = NULL;
     global->setTalking(false);
 }

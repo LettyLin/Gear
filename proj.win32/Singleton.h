@@ -7,6 +7,8 @@
 #ifndef _H_SINGLETON_
 #define _H_SINGLETON_
 
+#include <iostream>
+
 template <class T>
 class Singleton{
 public:

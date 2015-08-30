@@ -2,12 +2,15 @@
 #include "Global.h"
 #include "Hero.h"
 #include "NPC.h"
+#include "Tool.h"
+#include "Skill.h"
+
+bool Keyboard::m_bKeyState[MAX_CHECK_KEY_NUMBER] = { false };
 
 Keyboard::Keyboard(){
-    for (int key = 0; key < MAX_CHECK_KEY_NUMBER; ++key){
-        m_bKeyState[key] = false;
+    for (int i = 0; i < MAX_CHECK_KEY_NUMBER; ++i){
+        m_bKeyState[i] = false;
     }
-    global->keyLayer = this;
 }
 Keyboard::~Keyboard(){}
 
@@ -27,16 +30,30 @@ bool Keyboard::init(){
 
 //°´ÏÂ¼üÅÌ
 void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
+    if (global->getGamePause() && !(global->getTalking() && keycode == EventKeyboard::KeyCode::KEY_SPACE)){
+        return;
+    }
+
     Hero* hero = global->hero;
+
+    if (hero->getState() == ROLE_STATE_ATTACK){
+        return;
+    }
 
     //ÓÒ¼ü
     if (keycode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW){
+        if (global->hero->getDropping()){
+            hero->setVelocity(Vec2(3, hero->getVelocity().y));
+        }
         hero->setDirection(ROLE_DIRECTION_RIGHT);
         hero->onWalk();
         m_bKeyState[KEY_STATE_RIGHT_ARROW] = true;
     }
     //×ó¼ü
     else if (keycode == EventKeyboard::KeyCode::KEY_LEFT_ARROW){
+        if (global->hero->getDropping()){
+            hero->setVelocity(Vec2(3, hero->getVelocity().y));
+        }
         hero->setDirection(ROLE_DIRECTION_LEFT);
         hero->onWalk();
         m_bKeyState[KEY_STATE_LEFT_ARROW] = true;
@@ -53,7 +70,7 @@ void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
     }
     
     else if (keycode == EventKeyboard::KeyCode::KEY_SPACE){
-        if (global->IsTalking()){
+        if (global->getTalking()){
             global->npc->continueTalking();
         }
         else{
@@ -73,6 +90,11 @@ void Keyboard::onKeyPress(EventKeyboard::KeyCode keycode, Event* event){
             hero->onAttack();
         }
         m_bKeyState[KEY_STATE_LEFT_CTRL] = true;
+    }
+
+    else if (keycode == EventKeyboard::KeyCode::KEY_Z){
+        hero->UseSkill(SKILL_THROW_FIRE);
+        m_bKeyState[KEY_STATE_Z] = true;
     }
 
     //Add other keycodes here
@@ -103,6 +125,9 @@ void Keyboard::onKeyRelease(EventKeyboard::KeyCode keycode, Event* event){
     }
     else if (keycode == EventKeyboard::KeyCode::KEY_LEFT_CTRL){
         m_bKeyState[KEY_STATE_LEFT_CTRL] = false;
+    }
+    else if (keycode == EventKeyboard::KeyCode::KEY_Z){
+        m_bKeyState[KEY_STATE_Z] = false;
     }
 }
 

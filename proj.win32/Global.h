@@ -10,11 +10,17 @@
 USING_NS_CC;
 
 class MapLayer;
-class Keyboard;
-class Role;
 class Hero;
 class NPC;
 class Enemy;
+class Backpack;
+class Property;
+
+class ButtonLayer;
+
+class GameLayer;
+class OperateLayer;
+class UiLayer;
 
 class Global : public Singleton<Global>{
 public:
@@ -26,40 +32,23 @@ public:
     NPC* npc;
     Vector<Enemy*> enemies;
     MapLayer* mapLayer;
-    Keyboard* keyLayer;
 
+    Backpack* backpack;
+    Property* property;
 
-    //进入场景
-    void EnterScene(int scene_number);
+    ButtonLayer* buttonLayer;
 
-    //地图坐标转换瓦块坐标函数，用于碰撞检测
-    Point tileCoordForPosition(const Point &position);
-
-    //碰撞检测函数
-    void CheckCollision(Role* role, const Point &expect_position, Point &final_position, int &dropping);
+    GameLayer* gameLayer;
+    OperateLayer* operateLayer;
+    UiLayer* uiLayer;
 
     //创建对话层
-    void createTalkingLayer(std::string conversation);
+    //void createTalkingLayer(std::string conversation);
 
-    void setTalking(bool talking){
-        m_bTalking = talking;
-    }
-
-    bool IsTalking(){
-        return m_bTalking;
-    }
-
-    void setSceneIndex(int which_scene){
-        m_nSceneIndex = which_scene;
-    }
-
-    int getSceneIndex(){
-        return m_nSceneIndex;
-    }
-
-private:
-    bool m_bTalking;
-    int m_nSceneIndex;
+    CC_SYNTHESIZE(bool, m_bTalking, Talking);
+    CC_SYNTHESIZE(bool, m_bGamePause, GamePause);
+    CC_SYNTHESIZE(bool, m_bMusicPause, MusicPause);
+    CC_SYNTHESIZE(int, m_nSceneIndex, SceneIndex);
 };
 
 //定义调用该类唯一实例的宏

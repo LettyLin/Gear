@@ -51,18 +51,21 @@ public:
     CC_SYNTHESIZE(int, m_maxMp, MaxMp);
     CC_SYNTHESIZE(int, m_strenth, Strenth);
     CC_SYNTHESIZE(int, m_defence, Defence);
-    CC_SYNTHESIZE(Vec2, m_velocity, Velocity);
+    CC_SYNTHESIZE(int, m_moveVelocity, MoveVelocity);
+
 
     //Add other properties here
 
     CC_SYNTHESIZE(eRoleDirection, m_direction, Direction);
     CC_SYNTHESIZE(eRoleState, m_state, State);
+    CC_SYNTHESIZE(Vec2, m_velocity, Velocity);
     CC_SYNTHESIZE(bool, m_moveable, Moveable);
     CC_SYNTHESIZE(bool, m_dropping, Dropping);
     CC_SYNTHESIZE(bool, m_onSlope, OnSlope);
     CC_SYNTHESIZE(eRoleDirection, m_SlopeDirection, SlopeDirection);
-    CC_SYNTHESIZE(BoundingBox, m_bodyBox, BodyBox);
     CC_SYNTHESIZE(Point, m_lastJump, LastJump);
+    
+    CC_SYNTHESIZE(BoundingBox, m_bodyBox, BodyBox);
 
     //×´Ì¬±ä¸üº¯Êý
     bool ChangeState(const eRoleState new_state);

@@ -3,10 +3,7 @@
  <tileset firstgid="1" name="scene1map" tilewidth="3000" tileheight="800">
   <image source="scene1map.png" width="3000" height="800"/>
  </tileset>
- <tileset firstgid="2" name="地平线1" tilewidth="3000" tileheight="800">
-  <image source="地平线1.png" width="3000" height="800"/>
- </tileset>
- <tileset firstgid="3" name="a" tilewidth="32" tileheight="32">
+ <tileset firstgid="2" name="a" tilewidth="32" tileheight="32">
   <image source="a.png" width="32" height="32"/>
  </tileset>
  <layer name="background" width="94" height="25">
@@ -16,22 +13,22 @@
  </layer>
  <layer name="wall" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt08EJACAMBMGA/ffsx5d/vaAzkAZuSRUAAAAAPxjr6GVvotFb9Mywe4bd4Qy/lWF3ALhjAqgbABw=
+   eJzt07ENACAMA8GI/YemoaIHR3AnZQG/UgUAAADAD8Y6etmbaPQWPTPsnmF3OMNvZdgdAO6YJv8AEw==
   </data>
  </layer>
  <layer name="floor" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1ksKwCAMBUDB+9+5m65KoYgmfjoDWarxLYylAAAAAPAH9S7aPbOrjfW15u2siNpJRs+7ZhNBDnPIfA65x+iZTZGzL/Ktz+p35H1GZXLK3Mj+N/Xsf8q/ZVb/We/MygWwqgt/GAJ3
+   eJzt1ksKwCAMBUDx/ofupqtSKKKJn85Almp8C2MpAAAAAPxBvYt2z+xqY32teTsronaS0fOu2USQwxwyn0PuMXpmU+Tsi3zrs/odeZ9RmZwyN7L/TT37n/JvmdV/1juzcgGs6gJg+AGl
   </data>
  </layer>
  <layer name="rightslope" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1bEJAEAMA7FA9t/525DiS6eRwAtc4yoAAAAA4KfHyNA8S+8begPc8n15mgOwPU3GACs=
+   eJzt1aENAEAMA7Gq+w/9tCp4mBJbygJHUgUAAAAA/PQYGZpn6X1Db4Bbvi9PcwC2B5VnAB0=
   </data>
  </layer>
  <layer name="leftslope" width="94" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt0DENAAAIBLFP8O+ZGQMw0Cq4XAIAAAAAAAC76jrgsYr/V7wHgKkBoRQAEA==
+   eJzt0DENAAAIBLEP/kUzYwAGWgWXSwAAAAAAAGBXXQc8VvH/ivcAMDV3oAAL
   </data>
  </layer>
 </map>

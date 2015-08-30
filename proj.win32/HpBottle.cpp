@@ -1,4 +1,6 @@
 #include "HpBottle.h"
+#include "Hero.h"
+#include "Global.h"
 
 HpBottle::HpBottle(){}
 HpBottle::~HpBottle(){}
@@ -8,11 +10,15 @@ bool HpBottle::init(){
         return false;
     }
 
-    initWithFile("enter_geer_small");
+    initWithFile("hpbottle.png");
 
     m_toolId = TOOL_HPBOTTLE;
     m_toolType = TOOL_TYPE_ADDHP;
     m_toolValue = 20;
 
     return true;
+}
+
+void HpBottle::use(){
+    global->hero->AddHp(m_toolValue);
 }

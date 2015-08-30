@@ -19,9 +19,13 @@ public:
 
     CC_SYNTHESIZE(BoundingBox, m_bodyBox, BodyBox);
     CC_SYNTHESIZE(Vec2, m_velocity, Velocity);
+
+    CC_SYNTHESIZE_RETAIN(Action*, m_flyAction, FlyAction);
+    CC_SYNTHESIZE_RETAIN(Action*, m_endAction, EndAction);
     
 private:
     int m_baseHurt;
+    int m_nTimer;
 };
 
 #endif

@@ -21,7 +21,12 @@
    eJztzrEJAAAIwDDx/6M9QhSRZO3SCAAAYEs2+7Trf/BZAS2gAAk=
   </data>
  </layer>
- <layer name="slope" width="40" height="25">
+ <layer name="leftslope" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztzkEJAAAIBLDD/qGNcE9BtgRLAAAA4L+5DhQLEOAAAw==
+  </data>
+ </layer>
+ <layer name="rightslope" width="40" height="25">
   <data encoding="base64" compression="zlib">
    eJztzkEJAAAIBLDD/qGNcE9BtgRLAAAA4L+5DhQLEOAAAw==
   </data>

@@ -1,0 +1,10 @@
+nHasScrollFront = false
+NPCNumber = 1
+NPCName = "npc"
+EnemyTypeNumber = 1
+EnemyName = "enemy"
+EnemyNumber = 1
+BossTypeNumber = 0
+EnterPoint = (128,220)
+NPCPoint = (662,224)
+EnemyPoint = (1116,252)

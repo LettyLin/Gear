@@ -39,14 +39,18 @@ public:
     GameLayer();
     ~GameLayer();
     virtual bool init(int which_scene);
+    virtual bool init(int which_scene, const char* file_name);
     static GameLayer* create(int which_scene);
+    static GameLayer* createWithFile(int which_scene, const char* file_name);
 
     void InitSceneInfo();
+
     void LoadSceneInfo(int which_scene);
     void ReleaseSceneInfo();
 
     void addMap(int which_scene);
     void addRole();
+    void addRoleWithFile(const char* file_name);
 
     //cocos2d自带的更新函数，更新游戏
     virtual void update(float dt);

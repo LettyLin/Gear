@@ -18,9 +18,10 @@ public:
     void continueTalking();
     void endTalking();
 
+    CC_SYNTHESIZE(int, m_nTalkingTimes, TalkingTimes);
+
 private:
     Conversation** m_conversation;
-    int m_nTalkingTimes;
     int m_nMaxTalkingTimes;
 
     TalkingLayer* m_talkingLayer;
